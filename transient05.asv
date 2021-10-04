@@ -19,11 +19,11 @@ global x x_u y y_v u v pc T rho mu Gamma b SMAX SAVG aP aE aW aN aS eps k...
 % constants
 global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps C1eps C2eps kappa ERough Ti
 
-NPI        = 3000;        % number of grid cells in x-direction [-]
-NPJ        = 1000;        % number of grid cells in y-direction [-]
-XMAX       = 30;      % width of the domain [m]
-YMAX       = 10;       % height of the domain [m]
-MAX_ITER   = 1000;       % maximum number of outer iterations [-]
+NPI        = 20;        % number of grid cells in x-direction [-]
+NPJ        = 40;        % number of grid cells in y-direction [-]
+XMAX       = 10.0;      % width of the domain [m]
+YMAX       = 0.2;       % height of the domain [m]
+MAX_ITER   = 100;       % maximum number of outer iterations [-]
 U_ITER     = 1;         % number of Newton iterations for u equation [-]
 V_ITER     = 1;         % number of Newton iterations for v equation [-]
 PC_ITER    = 30;        % number of Newton iterations for pc equation [-]
@@ -35,7 +35,7 @@ SAVGneeded = 1E-9;      % maximum accepted average error in mass balance [kg/s]
 LARGE      = 1E30;      % arbitrary very large value [-]
 SMALL      = 1E-30;     % arbitrary very small value [-]
 P_ATM      = 101000.;   % athmospheric pressure [Pa]
-U_IN       = 80/3.6;       % in flow velocity [m/s]
+U_IN       = 1.0;       % in flow velocity [m/s]
 
 Cmu        = 0.09;
 sigmak     = 1.;
@@ -201,13 +201,8 @@ fclose(velv);
 figure(1)
 quiver(Y,X,u,v,0.05);
 %axis equal;
-<<<<<<< HEAD
 figure(2)
-surf(X,Y,u);
+surf(X,Y,u');
 
 figure(3)
-surf(X,Y,v);
-=======
-
-%Plot pressure
->>>>>>> main
+surf(X,Y,pc');
