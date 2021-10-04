@@ -98,6 +98,14 @@ for I = Istart:Iend
         aP(i,J) = aP(i,J)/relax_u;
         b(i,J)  = b(i,J) + (1.0 - relax_u)*aP(i,J)*u(i,J);
         
+           % u can be fixed to zero by setting SP to a very large value
+        if (i == ceil((NPI+1)/5) && J < ceil((NPJ+1)/3))
+            SP(i,J) = -LARGE;
+        end
+        if (i == ceil(1*(NPI+1)/5) && J > ceil(2*(NPJ+1)/3))
+            SP(i,J) = -LARGE;
+        end
+        
         % now we have implemented eq. 6.36 in the form of eq. 7.7
         % and the TDMA algorithm can be called to solve it. This is done
         % in the next step of the main program.       

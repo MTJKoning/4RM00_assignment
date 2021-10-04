@@ -111,9 +111,14 @@ omega = 1.0; % Over-relaxation factor for SOR solver
 % Initialize convergence parameters at large values
 SMAX = LARGE;
 SAVG = LARGE;
+ 
+AREAw = y_v(j+1) - y_v(j); % See fig. 6.3
+        AREAe = AREAw;
+        AREAs = x(I) - x(I-1);
+        AREAn = AREAs;
 
-m_in  = 1.;
-m_out = 1.;
+m_in  = 28.667*AREAw;   %1.;
+m_out = 28.667*AREAw;    %1.;
 
 for i = 1: NPI+2
     for J = 1:NPJ+2
@@ -123,11 +128,11 @@ end
 
 v(:,:)     = 0.;       % Velocity in y-direction
 p(:,:)     = 0.;       % Relative pressure
-T(:,:)     = 273.;     % Temperature
-rho(:,:)   = 1.0;      % Density
-mu(:,:)    = 2.E-5;    % Viscosity
-Cp(:,:)    = 1013.;    % J/(K*kg) Heat capacity - assumed constant for this problem
-Gamma      = 0.025./Cp;% Thermal conductivity divided by heat capacity
+T(:,:)     = 283.;     % Temperature
+rho(:,:)   = 1.29;      % Density
+mu(:,:)    = 1.8E-5;    % Viscosity
+Cp(:,:)    = 710;    % J/(K*kg) Heat capacity - assumed constant for this problem
+Gamma      = 0.024./Cp;% Thermal conductivity divided by heat capacity
 k(:,:)     = 1e-3;     % k
 eps(:,:)   = 1e-4;     % epsilon
 uplus(:,:) = 1.;       % uplus
