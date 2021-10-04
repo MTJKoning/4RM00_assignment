@@ -111,9 +111,14 @@ omega = 1.0; % Over-relaxation factor for SOR solver
 % Initialize convergence parameters at large values
 SMAX = LARGE;
 SAVG = LARGE;
+ 
+AREAw = y_v(j+1) - y_v(j); % See fig. 6.3
+        AREAe = AREAw;
+        AREAs = x(I) - x(I-1);
+        AREAn = AREAs;
 
-m_in  = 1.;
-m_out = 1.;
+m_in  = 28.667*AREAw;   %1.;
+m_out = 28.667*AREAw;    %1.;
 
 for i = 1: NPI+2
     for J = 1:NPJ+2
