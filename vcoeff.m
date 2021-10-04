@@ -54,7 +54,6 @@ for I = Istart:Iend
         aN(I,j) = max([-Fn, Dn - Fn/2, 0.]);
         aPold   = 0.5*(rho(I,J-1) + rho(I,J))*AREAe*AREAn/Dt;
         
-<<<<<<< HEAD
         
         % transport of v through the baffles can be switched off by setting the coefficients to zero
         if (I == ceil((NPI+1)/5)-1 && j < ceil((NPJ+1)/5))     % left of baffle #1
@@ -65,16 +64,6 @@ for I = Istart:Iend
         end
             
 
-=======
-          % transport of v through the bus 
-        if           (I == ceil((NPI+1)/5)-1 && j < ceil((NPJ+1)/3))     % left of bus #1
-            aE(I,j) = 0;
-        end
-        if            (I == ceil((NPI+1)/5)   && j < ceil((NPJ+1)/3))     % right of bus #1
-            aW(I,j) = 0;
-        end
-        
->>>>>>> main
         % eq. 8.31 without time dependent terms (see also eq. 5.14):
         aP(I,j) = aW(I,j) + aE(I,j) + aS(I,j) + aN(I,j) + Fe - Fw + Fn - Fs - SP(I,J) + aPold;
         

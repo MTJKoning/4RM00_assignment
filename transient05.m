@@ -19,8 +19,8 @@ global x x_u y y_v u v pc T rho mu Gamma b SMAX SAVG aP aE aW aN aS eps k...
 % constants
 global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps C1eps C2eps kappa ERough Ti
 
-NPI        = 3000;        % number of grid cells in x-direction [-]
-NPJ        = 1000;        % number of grid cells in y-direction [-]
+NPI        = 60;        % number of grid cells in x-direction [-]
+NPJ        = 20;        % number of grid cells in y-direction [-]
 XMAX       = 30;      % width of the domain [m]
 YMAX       = 10;       % height of the domain [m]
 MAX_ITER   = 1000;       % maximum number of outer iterations [-]
@@ -201,13 +201,10 @@ fclose(velv);
 figure(1)
 quiver(Y,X,u,v,0.05);
 %axis equal;
-<<<<<<< HEAD
+
 figure(2)
 surf(X,Y,u);
 
 figure(3)
 surf(X,Y,v);
-=======
 
-%Plot pressure
->>>>>>> main
