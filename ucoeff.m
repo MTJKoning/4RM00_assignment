@@ -95,7 +95,7 @@ for I = Istart:Iend
         if (i == ceil((NPI+1)/5) && J < ceil((NPJ+1)/3))
             SP(i,J) = -LARGE;
         end
-        if (i == ceil(4*(NPI+1)/5) && J > ceil(2*(NPJ+1)/3))
+        if (i == ceil(1*(NPI+1)/5) && J > ceil(2*(NPJ+1)/3))
             SP(i,J) = -LARGE;
         end
         
