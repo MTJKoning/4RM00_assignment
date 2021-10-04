@@ -205,4 +205,4 @@ figure(2)
 surf(X,Y,u);
 
 figure(3)
-surf(X,Y,pc);
+surf(X,Y,v);

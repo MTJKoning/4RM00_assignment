@@ -42,7 +42,7 @@ for I = Istart:Iend
         mus = 0.25*(mueff(I-1,J) + mueff(I,J) + mueff(I-1,J-1) + mueff(I,J-1));
         mun = 0.25*(mueff(I-1,J+1) + mueff(I,J+1) + mueff(I-1,J) + mueff(I,J));
         
-        if J==2 
+        if J==2 || J==NPJ+1
             if yplus(I,J) < 11.63
                 SP(i,J) = -mu(I,J)*AREAs/(0.5*AREAw);
             else
@@ -59,11 +59,11 @@ for I = Istart:Iend
         
         
         % u can be fixed to zero by setting SP to a very large value
-        if (i == ceil((NPI+1)/5) && J < ceil((NPJ+1)/5))
+        if (i == ceil((NPI+1)/5 ) && J < ceil((NPJ+1)/5))
             SP(i,J) = -1e30;
         end
            
-               
+              
         % The coefficients (hybrid differencing scheme)
         aW(i,J) = max([ Fw, Dw + Fw/2, 0.]);
         aE(i,J) = max([-Fe, De - Fe/2, 0.]);
