@@ -60,9 +60,9 @@ for I = Istart:Iend
         
         % u can be fixed to zero by setting SP to a very large value at the
         % baffle
-        baffle=[ceil((NPI+1)/5); ceil((NPI+1)/5 +1); ceil((NPI+1)/5 +2); ceil((NPI+1)/5 +3); ceil((NPI+1)/5 +4); ceil((NPI+1)/5 +5); ceil((NPI+1)/5 +6); ceil((NPI+1)/5 +7) ; ceil((NPI+1)/5 +8); ceil((NPI+1)/5 +9); ceil((NPI+1)/5 +10); ceil((NPI+1)/5 +11)];
-        for kk=1:12
-        if (i == baffle(kk) && J < ceil((NPJ+1)/5))
+%        baffle=[ceil((NPI+1)/5); ceil((NPI+1)/5 +1); ceil((NPI+1)/5 +2); ceil((NPI+1)/5 +3); ceil((NPI+1)/5 +4); ceil((NPI+1)/5 +5); ceil((NPI+1)/5 +6); ceil((NPI+1)/5 +7) ; ceil((NPI+1)/5 +8); ceil((NPI+1)/5 +9); ceil((NPI+1)/5 +10); ceil((NPI+1)/5 +11)];
+        for kk=0:12
+        if (i == ceil((NPI+1)/5 + kk) && J < ceil((NPJ+1)/3))
                 SP(i,J) = -1e30;
         end
         end
