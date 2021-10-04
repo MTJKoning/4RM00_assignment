@@ -202,7 +202,7 @@ figure(1)
 quiver(Y,X,u,v,0.05);
 %axis equal;
 figure(2)
-surf(X,Y,u);
+surf(X,Y,u');
 
 figure(3)
-surf(X,Y,pc);
+surf(X,Y,pc');

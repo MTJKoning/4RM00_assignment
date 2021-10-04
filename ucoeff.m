@@ -57,6 +57,21 @@ for I = Istart:Iend
             2./3. * (rho(I,J)*k(I,J) - rho(I-1,J)*k(I-1,J))/(x(I) - x(I-1));
         Su(i,J) =  Su(i,J)*AREAw*AREAs;
         
+        
+        % u can be fixed to zero by setting SP to a very large value
+        if (i == ceil((NPI+1)/5) && J < ceil((NPJ+1)/2))
+            SP(i,J) = -1e30;
+        end
+           
+        if (i == ceil(2*(NPI+1)/5) && J > ceil(2*(NPJ+1)/3))
+            SP(i,J) = -1e30;
+        end
+        
+        if (i == ceil(3*(NPI+1)/5) && J < ceil(2*(NPJ+1)/3))
+            SP(i,J) = -1e30;
+        end
+
+         
         % The coefficients (hybrid differencing scheme)
         aW(i,J) = max([ Fw, Dw + Fw/2, 0.]);
         aE(i,J) = max([-Fe, De - Fe/2, 0.]);
