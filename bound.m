@@ -17,8 +17,8 @@ k(1,1:NPJ+2)     = 1.5*(U_IN*Ti)^2; % at inlet
 eps(1,1:NPJ+2)   = Cmu^0.75 *k(1,1:NPJ+2).^1.5/(0.07*YMAX*0.5); % at inlet
 
 % Fix temperature at the walls in Kelvin
-T(1:NPI+2,1) = 273.; % bottom wall
-T(1:NPI+2,NPJ+2) = 273.; % top wall
+T(1:NPI+2,1) = 283.; % bottom wall
+T(1:NPI+2,NPJ+2) = 283.; % top wall
 
 % begin: globcont();=======================================================
 % Purpose: Calculate mass in and out of the calculation domain to correct for the continuity at outlet.
