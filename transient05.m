@@ -206,5 +206,5 @@ figure(2)
 surf(X,Y,u);
 
 figure(3)
-surf(X,Y,v);
+surf(X,Y,pc);
 

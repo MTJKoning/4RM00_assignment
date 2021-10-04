@@ -58,11 +58,14 @@ for I = Istart:Iend
         Su(i,J) =  Su(i,J)*AREAw*AREAs;
         
         
-        % u can be fixed to zero by setting SP to a very large value
-        if (i == ceil((NPI+1)/5) && J < ceil((NPJ+1)/5))
-            SP(i,J) = -1e30;
+        % u can be fixed to zero by setting SP to a very large value at the
+        % baffle
+        baffle=[ceil((NPI+1)/5); ceil((NPI+1)/5 +1); ceil((NPI+1)/5 +2); ceil((NPI+1)/5 +3); ceil((NPI+1)/5 +4); ceil((NPI+1)/5 +5); ceil((NPI+1)/5 +6); ceil((NPI+1)/5 +7) ; ceil((NPI+1)/5 +8); ceil((NPI+1)/5 +9); ceil((NPI+1)/5 +10); ceil((NPI+1)/5 +11)];
+        for kk=1:12
+        if (i == baffle(kk) && J < ceil((NPJ+1)/5))
+                SP(i,J) = -1e30;
         end
-           
+        end
                
         % The coefficients (hybrid differencing scheme)
         aW(i,J) = max([ Fw, Dw + Fw/2, 0.]);
