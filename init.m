@@ -123,11 +123,11 @@ end
 
 v(:,:)     = 0.;       % Velocity in y-direction
 p(:,:)     = 0.;       % Relative pressure
-T(:,:)     = 273.;     % Temperature
-rho(:,:)   = 1.0;      % Density
-mu(:,:)    = 2.E-5;    % Viscosity
-Cp(:,:)    = 1013.;    % J/(K*kg) Heat capacity - assumed constant for this problem
-Gamma      = 0.025./Cp;% Thermal conductivity divided by heat capacity
+T(:,:)     = 283.;     % Temperature
+rho(:,:)   = 1.29;      % Density
+mu(:,:)    = 1.8E-5;    % Viscosity
+Cp(:,:)    = 710;    % J/(K*kg) Heat capacity - assumed constant for this problem
+Gamma      = 0.024./Cp;% Thermal conductivity divided by heat capacity
 k(:,:)     = 1e-3;     % k
 eps(:,:)   = 1e-4;     % epsilon
 uplus(:,:) = 1.;       % uplus
