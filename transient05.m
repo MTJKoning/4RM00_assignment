@@ -18,7 +18,7 @@ global x x_u y y_v u v pc T rho mu Gamma b SMAX SAVG aP aE aW aN aS eps k...
     u_old v_old pc_old T_old Dt eps_old k_old uplus yplus yplus1 yplus2
 % constants
 global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps C1eps C2eps kappa ERough Ti
-
+%haalllloooo
 NPI        = 60;        % number of grid cells in x-direction [-]
 NPJ        = 20;        % number of grid cells in y-direction [-]
 XMAX       = 30;      % width of the domain [m]
