@@ -8,8 +8,8 @@ global y u v T m_in m_out y_v F_u k eps
 
 % Set velocity at the inlet
 for J = 1:NPJ+2
-    %       u(2,1:NPJ+2) = U_IN; % inlet
-    u(2,J) = U_IN*1.5*(1.-(2.*(y(J)-YMAX/2.)/YMAX)^2); % inlet
+    u(2,1:NPJ+2) = U_IN; % inlet
+    %u(2,J) = U_IN*1.5*(1.-(2.*(y(J)-YMAX/2.)/YMAX)^2); % inlet
 end
 
 % Set k and eps at the inlet

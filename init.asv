@@ -2,7 +2,7 @@ function [] = init()
 % Purpose: To initilise all parameters.
 
 % constants
-global NPI NPJ LARGE U_IN XMAX YMAX P_ATM
+global NPI NPJ LARGE U_IN XMAX YMAX
 % variables
 global x x_u y y_v u v pc p T rho mu mut mueff Gamma Cp k eps delta E E2 yplus yplus1 ...
     yplus2 uplus tw b SP Su d_u d_v omega SMAX SAVG m_in m_out relax_u relax_v ...
@@ -123,7 +123,7 @@ for i = 1: NPI+2
 end
 
 v(:,:)     = 0.;       % Velocity in y-direction
-p(:,:)     = 0;     % Relative pressure
+p(:,:)     = 0.;       % Relative pressure
 T(:,:)     = 283.;     % Temperature
 rho(:,:)   = 1.29;      % Density
 mu(:,:)    = 1.8E-5;    % Viscosity
