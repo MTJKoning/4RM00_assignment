@@ -14,19 +14,19 @@ close all
 clc
 %% declare all variables and contants
 % variables
-global p x x_u y y_v u v pc T rho mu Gamma b SMAX SAVG aP aE aW aN aS eps k...
+global x x_u y y_v u v pc T rho mu Gamma b SMAX SAVG aP aE aW aN aS eps k...
     u_old v_old pc_old T_old Dt eps_old k_old uplus yplus yplus1 yplus2
 % constants
 global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps C1eps C2eps kappa ERough Ti
-
-NPI        = 60;        % number of grid cells in x-direction [-]
+%haalllloooo
+NPI        = 100;        % number of grid cells in x-direction [-]
 NPJ        = 20;        % number of grid cells in y-direction [-]
-XMAX       = 30;      % width of the domain [m]
+XMAX       = 50;      % width of the domain [m]
 YMAX       = 10;       % height of the domain [m]
 MAX_ITER   = 1000;       % maximum number of outer iterations [-]
 U_ITER     = 1;         % number of Newton iterations for u equation [-]
 V_ITER     = 1;         % number of Newton iterations for v equation [-]
-PC_ITER    = 30; %30       % number of Newton iterations for pc equation [-]
+PC_ITER    = 30;        % number of Newton iterations for pc equation [-]
 T_ITER     = 1;         % number of Newton iterations for T equation [-]
 EPS_ITER   = 1;         % number of Newton iterations for Eps equation [-]
 K_ITER     = 1;         % number of Newton iterations for K equation [-]
@@ -47,7 +47,7 @@ ERough     = 9.793;
 Ti         = 0.04;
 
 Dt         = 0.1;
-TOTAL_TIME = 10;
+TOTAL_TIME = 1.;
 
 %% start main function here
 init(); % initialization
@@ -206,5 +206,5 @@ figure(2)
 surf(X,Y,u);
 
 figure(3)
-surf(X,Y,p);
+surf(X,Y,pc);
 
