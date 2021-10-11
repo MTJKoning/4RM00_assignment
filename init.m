@@ -112,8 +112,8 @@ omega = 1.0; % Over-relaxation factor for SOR solver
 SMAX = LARGE;
 SAVG = LARGE;
 
-m_in  = 1.;   %1.;
-m_out = 1.;    %1.;
+m_in  = 0.;   %1.;
+m_out = 0.;    %1.;
 
 for i = 1: NPI+2
     for J = 1:NPJ+2
