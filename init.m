@@ -115,7 +115,7 @@ SAVG = LARGE;
 m_in  = 0.;   %1.;
 m_out = 0.;    %1.;
 
-for i = 1: NPI+2
+for i = 1:NPI+2
     for J = 1:NPJ+2
         u(i,J) = U_IN; %*1.5*(1.0-(2.0*(y(J)-YMAX/2)/YMAX)^2); % Velocity in x-direction
     

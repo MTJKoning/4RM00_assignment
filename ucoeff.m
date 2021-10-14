@@ -60,12 +60,12 @@ for I = Istart:Iend
         
         % u can be fixed to zero by setting SP to a very large value at the
         % baffle
-%        baffle=[ceil((NPI+1)/5); ceil((NPI+1)/5 +1); ceil((NPI+1)/5 +2); ceil((NPI+1)/5 +3); ceil((NPI+1)/5 +4); ceil((NPI+1)/5 +5); ceil((NPI+1)/5 +6); ceil((NPI+1)/5 +7) ; ceil((NPI+1)/5 +8); ceil((NPI+1)/5 +9); ceil((NPI+1)/5 +10); ceil((NPI+1)/5 +11)];
-        for kk=0:25
-        if (i == ceil((NPI+1)/5 + kk) && J < ceil((NPJ+1)/3))
-                SP(i,J) = -1e30;
-        end
-        end
+% %        baffle=[ceil((NPI+1)/5); ceil((NPI+1)/5 +1); ceil((NPI+1)/5 +2); ceil((NPI+1)/5 +3); ceil((NPI+1)/5 +4); ceil((NPI+1)/5 +5); ceil((NPI+1)/5 +6); ceil((NPI+1)/5 +7) ; ceil((NPI+1)/5 +8); ceil((NPI+1)/5 +9); ceil((NPI+1)/5 +10); ceil((NPI+1)/5 +11)];
+%         for kk=0:25
+%         if (i == ceil((NPI+1)/5 + kk) && J < ceil((NPJ+1)/3))
+%                 SP(i,J) = -1e30;
+%         end
+%         end
                
         % The coefficients (hybrid differencing scheme)
         aW(i,J) = max([ Fw, Dw + Fw/2, 0.]);
@@ -76,11 +76,12 @@ for I = Istart:Iend
             aS(i,J) = max([ Fs, Ds + Fs/2, 0.]);
         end
         
-        if J==NPJ+1
-            aN(i,J) = 0.;
-        else
-            aN(i,J) = max([-Fn, Dn - Fn/2, 0.]);
-        end
+%         if J==NPJ+1
+%             aN(i,J) = 0.;
+%         else
+%             aN(i,J) = max([-Fn, Dn - Fn/2, 0.]);
+%         end
+        
         aPold   = 0.5*(rho(I-1,J) + rho(I,J))*AREAe*AREAn/Dt;
         
         % eq. 8.31 without time dependent terms (see also eq. 5.14):
