@@ -56,15 +56,15 @@ for I = Istart:Iend
         
         
         % transport of v through the baffles can be switched off by setting the coefficients to zero
-%         if (I == ceil((NPI+1)/5) && j < ceil((NPJ+1)/3))     % left of baffle #1
-%             aE(I,j) = 0;
-%             SP(I,j)=0;
-%         end
-%         if (I == ceil((NPI+1)/5 + 25)   && j < ceil((NPJ+1)/3))     % right of baffle #1
-%             aW(I,j) = 0;
-%             SP(I,j)=0;
-% 
-%         end
+        if (I == ceil((NPI+1)/5) && j < ceil((NPJ+1)/3))     % left of baffle #1
+            aE(I,j) = 0;
+            SP(I,j)=0;
+        end
+        if (I == ceil((NPI+1)/5 + 25)   && j < ceil((NPJ+1)/3))     % right of baffle #1
+            aW(I,j) = 0;
+            SP(I,j)=0;
+
+        end
 
             
 
