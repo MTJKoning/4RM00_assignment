@@ -21,13 +21,8 @@ global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps C1eps C2eps kappa 
 %haalllloooo
 NPI        = 100;        % number of grid cells in x-direction [-]
 NPJ        = 20;        % number of grid cells in y-direction [-]
-<<<<<<< Updated upstream
-XMAX       = 500;      % width of the domain [m]
-YMAX       = 100;       % height of the domain [m]
-=======
 XMAX       = 50;        % width of the domain [m]
 YMAX       = 10;        % height of the domain [m]
->>>>>>> Stashed changes
 MAX_ITER   = 1000;       % maximum number of outer iterations [-]
 U_ITER     = 1;         % number of Newton iterations for u equation [-]
 V_ITER     = 1;         % number of Newton iterations for v equation [-]
@@ -210,8 +205,6 @@ end % end of calculation
 figure(2)
 surf(X,Y,u);
 
-figure(3)
-surf(X,Y,v);
 
 figure(4)
 surf(X,Y,p);
