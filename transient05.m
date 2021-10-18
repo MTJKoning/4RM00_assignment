@@ -19,11 +19,11 @@ global x x_u y y_v u v pc T rho mu Gamma b SMAX SAVG aP aE aW aN aS eps k...
 % constants
 global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps C1eps C2eps kappa ERough Ti p
 %haalllloooo
-NPI        = 100;        % number of grid cells in x-direction [-]
-NPJ        = 20;        % number of grid cells in y-direction [-]
+NPI        = 50;        % number of grid cells in x-direction [-]
+NPJ        = 12;        % number of grid cells in y-direction [-]
 XMAX       = 50;      % width of the domain [m]
 YMAX       = 10;       % height of the domain [m]
-MAX_ITER   = 1000;       % maximum number of outer iterations [-]
+MAX_ITER   = 500;       % maximum number of outer iterations [-]
 U_ITER     = 1;         % number of Newton iterations for u equation [-]
 V_ITER     = 1;         % number of Newton iterations for v equation [-]
 PC_ITER    = 30;        % number of Newton iterations for pc equation [-]
@@ -198,9 +198,9 @@ fclose(velv);
 %% plot vector map
 
 [X,Y]=meshgrid(y_v, x_u);
-figure(1)
-quiver(Y,X,u,v,0.05);
-%axis equal;
+% figure(1)
+% quiver(Y,X,u,v,0.05);
+% %axis equal;
 
 figure(2)
 surf(X,Y,u);

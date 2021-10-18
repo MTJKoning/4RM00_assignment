@@ -70,17 +70,13 @@ for I = Istart:Iend
         % The coefficients (hybrid differencing scheme)
         aW(i,J) = max([ Fw, Dw + Fw/2, 0.]);
         aE(i,J) = max([-Fe, De - Fe/2, 0.]);
+        aN(i,J) = max([-Fn, Dn - Fn/2, 0.]);
         if J==2
             aS(i,J) = 0.;
         else
             aS(i,J) = max([ Fs, Ds + Fs/2, 0.]);
         end
-        
-        if J==NPJ+1
-            aN(i,J) = 0.;
-        else
-            aN(i,J) = max([-Fn, Dn - Fn/2, 0.]);
-        end
+       
         aPold   = 0.5*(rho(I-1,J) + rho(I,J))*AREAe*AREAn/Dt;
         
         % eq. 8.31 without time dependent terms (see also eq. 5.14):
