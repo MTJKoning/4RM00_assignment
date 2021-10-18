@@ -4,7 +4,7 @@ function [] = bound()
 % constants
 global NPI NPJ U_IN YMAX Cmu Ti
 % variable
-global y u v T m_in m_out y_v F_u k eps x_u F_v p
+global y u v T m_in m_out y_v F_u k eps x_u F_v p Omega LARGE
 
 % Set velocity at the inlet
 for J = 1:NPJ+2
@@ -62,8 +62,8 @@ p(1,2:NPJ+1) = p(2,2:NPJ+1);
 p(1,2:NPJ+1) = p(2,2:NPJ+1);
 % down side no wall
 % p(2:NPI+1,1) = p(2:NPI+1,2);
-% p(2:NPI+1,1) = p(2:NPI+1,2);
-% 
+% p(2:NPI+1,1) = p(2:NPI+1,2); 
+Omega(1:NPI+2,1) = LARGE; 
 k(NPI+2,2:NPJ+1) = k(NPI+1,2:NPJ+1);
 eps(NPI+2,2:NPJ+1) = eps(NPI+1,2:NPJ+1);
 T(NPI+2,1:NPJ+2) = T(NPI+1,1:NPJ+2);

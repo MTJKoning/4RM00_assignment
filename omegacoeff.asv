@@ -61,9 +61,11 @@ for I = Istart:Iend
         aS(I,J) = max([ Fs, Ds + Fs/2, 0.]);
         aN(I,J) = max([-Fn, Dn - Fn/2, 0.]);
         
-        % Near wall values at bottom
-        Omega(1:NPI+2,1) = LARGE; 
-       
+        % Near wall values 
+        % Top wall
+        if (i == ceil((NPI+1) + kk) && J < ceil((NPJ+1)))
+                SP(i,J) = -1e30;
+        end
         
         aPold   =  rho(I,J)*AREAe*AREAn/Dt;
         

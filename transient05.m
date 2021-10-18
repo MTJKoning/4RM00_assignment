@@ -118,7 +118,7 @@ for time = Dt:Dt:TOTAL_TIME
         T_old(2:NPI+1,2:NPJ+1)   = T(2:NPI+1,2:NPJ+1);        
         eps_old(2:NPI+1,2:NPJ+1) = eps(2:NPI+1,2:NPJ+1);
         k_old(2:NPI+1,2:NPJ+1)   = k(2:NPI+1,2:NPJ+1);
-        Omega_old(2:NPI+1,2:NPJ+1) = Omega(2:NPI+1,2:NPJ+1)
+        Omega_old(2:NPI+1,2:NPJ+1) = Omega(2:NPI+1,2:NPJ+1);
         
         % end: storeresults()==============================================
         
