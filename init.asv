@@ -2,12 +2,12 @@ function [] = init()
 % Purpose: To initilise all parameters.
 
 % constants
-global NPI NPJ LARGE U_IN XMAX YMAX P_ATM 
+global NPI NPJ LARGE U_IN XMAX YMAX P_ATM omega
 % variables
 global x x_u y y_v u v pc p T rho mu mut mueff Gamma Cp k eps delta E E2 yplus yplus1 ...
     yplus2 uplus tw b SP Su d_u d_v omega SMAX SAVG m_in m_out relax_u relax_v ...
     relax_pc relax_T aP aE aW aN aS F_u F_v u_old v_old pc_old T_old k_old ...
-    eps_old dudx dudy dvdx dvdy Omega Omega_old
+    eps_old dudx dudy dvdx dvdy
 
 % begin: memalloc()========================================================
 % allocate memory for variables
@@ -29,7 +29,7 @@ Gamma = zeros(NPI+2,NPJ+2);
 Cp  = zeros(NPI+2,NPJ+2);
 k  = zeros(NPI+2,NPJ+2);
 eps  = zeros(NPI+2,NPJ+2);
-Omega = zeros(NPI+2,NPJ+2);
+omega = zeros(NPI+2,NPJ+2);
 delta  = zeros(NPI+2,NPJ+2);
 E  = zeros(NPI+2,NPJ+2);
 E2  = zeros(NPI+2,NPJ+2);
@@ -45,7 +45,6 @@ pc_old = zeros(NPI+2,NPJ+2);
 T_old  = zeros(NPI+2,NPJ+2);
 k_old  = zeros(NPI+2,NPJ+2);
 eps_old  = zeros(NPI+2,NPJ+2);
-Omega_old = zeros(NPI+2, NPJ+2);
 
 dudx   = zeros(NPI+2,NPJ+2);
 dudy   = zeros(NPI+2,NPJ+2);
@@ -114,10 +113,10 @@ omega = 1.0; % Over-relaxation factor for SOR solver
 SMAX = LARGE;
 SAVG = LARGE;
 
-m_in  = 0.;   %1.;
-m_out = 0.;    %1.;
+m_in  = 1.;   %1.;
+m_out = 1.;    %1.;
 
-for i = 1:NPI+2
+for i = 1: NPI+2
     for J = 1:NPJ+2
         u(i,J) = U_IN; %*1.5*(1.0-(2.0*(y(J)-YMAX/2)/YMAX)^2); % Velocity in x-direction
     
@@ -133,7 +132,7 @@ Cp(:,:)    = 710;    % J/(K*kg) Heat capacity - assumed constant for this proble
 Gamma      = 0.024./Cp;% Thermal conductivity divided by heat capacity
 k(:,:)     = 1e-3;     % k
 eps(:,:)   = 1e-4;     % epsilon
-Omega = eps(:,:)./k(:,:);    % Omega --> Wilcox
+omega(:,:) = k(:,:)/eps(:,:);    % Omega --> Wilcox
 uplus(:,:) = 1.;       % uplus
 yplus1(:,:)= sqrt(rho .* u ./ mu) * (y(2) - y(1));   % yplus1
 yplus2(:,:)= sqrt(rho .* u ./ mu) * (y(NPJ+2) - y(NPJ+1));  % yplus2
