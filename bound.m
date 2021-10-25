@@ -35,11 +35,6 @@ for J = 2:NPJ+1
     m_out_u = m_out_u + F_u(NPI+1,J)*AREAw;
 end
 
-for I = 2:NPI+1
-    i=I;
-    AREAs = x_u(i+1) - x_u(i);
-    m_out_v = m_out_v + F_v(I,NPJ+1)*AREAs;
-end
 % end: globcont()==========================================================
 
 % Velocity and temperature gradient at outlet = zero:
@@ -51,20 +46,20 @@ v(NPI+2,2:NPJ+1) = v(NPI+1,2:NPJ+1);
 % Top side no wall
  u(2:NPI+1,NPJ+1) = u(2:NPI+1,NPJ+1);
  v(2:NPI+1,NPJ+1) = v(2:NPI+1,NPJ+1); 
-% Pressure left side
-p(NPI+2,2:NPJ+1) = p(NPI+1,2:NPJ+1);
-p(NPI+2,2:NPJ+1) = p(NPI+1,2:NPJ+1);
-% Top side no wall
-p(2:NPI+1,NPJ+2) = p(2:NPI+1,NPJ+1);
-p(2:NPI+1,NPJ+2) = p(2:NPI+1,NPJ+1);
-% Pressure right side
-p(1,2:NPJ+1) = p(2,2:NPJ+1);
-p(1,2:NPJ+1) = p(2,2:NPJ+1);
-% down side no wall
+% % Pressure left side
+% p(NPI+2,2:NPJ+1) = p(NPI+1,2:NPJ+1);
+% p(NPI+2,2:NPJ+1) = p(NPI+1,2:NPJ+1);
+% % Top side no wall
+% p(2:NPI+1,NPJ+2) = p(2:NPI+1,NPJ+1);
+% p(2:NPI+1,NPJ+2) = p(2:NPI+1,NPJ+1);
+% % Pressure right side
+% p(1,2:NPJ+1) = p(2,2:NPJ+1);
+% p(1,2:NPJ+1) = p(2,2:NPJ+1);
+% % Down side no wall
 % p(2:NPI+1,1) = p(2:NPI+1,2);
 % p(2:NPI+1,1) = p(2:NPI+1,2); 
-Omega(1:NPI+2,1) = LARGE; 
+
 k(NPI+2,2:NPJ+1) = k(NPI+1,2:NPJ+1);
-eps(NPI+2,2:NPJ+1) = eps(NPI+1,2:NPJ+1);
+Omega(NPI+2,2:NPJ+1) = Omega(NPI+1,2:NPJ+1);
 T(NPI+2,1:NPJ+2) = T(NPI+1,1:NPJ+2);
 end

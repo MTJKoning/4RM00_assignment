@@ -9,18 +9,18 @@
 % Converted from C to Matlab by YTANG
 % References: 1. Computational Fluid Dynamics, H.K. Versteeg and W. Malalasekera, Longman Group Ltd, 1995
 
-clear
+clear all
 close all
 clc
 %% declare all variables and contants
 % variables
 global x x_u y y_v u v pc T rho mu Gamma b SMAX SAVG aP aE aW aN aS eps k...
-    u_old v_old pc_old T_old Dt eps_old k_old uplus yplus yplus1 yplus2 P_ATM Omega Omega_old
+    u_old v_old pc_old T_old Dt eps_old k_old uplus yplus yplus1 yplus2 P_ATM Omega Omega_old Su
 % constants
 global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps sigmaw C1eps C2eps kappa ERough Ti p gamma1 beta1 beta_star
 %haalllloooo
-NPI        = 100;        % number of grid cells in x-direction [-]
-NPJ        = 20;        % number of grid cells in y-direction [-]
+NPI        = 50;        % number of grid cells in x-direction [-]
+NPJ        = 25;        % number of grid cells in y-direction [-]
 XMAX       = 50;        % width of the domain [m]
 YMAX       = 10;        % height of the domain [m]
 MAX_ITER   = 1000;       % maximum number of outer iterations [-]
@@ -52,7 +52,7 @@ beta1      = 0.075;
 beta_star  = 0.09;
 
 
-Dt         = 0.5;
+Dt         = 0.1; %XMAX/(NPI*U_IN);
 TOTAL_TIME = 1.;
 
 %% start main function here
@@ -90,20 +90,20 @@ for time = Dt:Dt:TOTAL_TIME
             k = solve(k, b, aE, aW, aN, aS, aP);
         end
         
-        epscoeff();
-        for iter_eps = 1:EPS_ITER
-            eps = solve(eps, b, aE, aW, aN, aS, aP);
-        end
+%         epscoeff();
+%         for iter_eps = 1:EPS_ITER
+%             eps = solve(eps, b, aE, aW, aN, aS, aP);
+%         end
         
         Tcoeff();
         for iter_T = 1:T_ITER
             T = solve(T, b, aE, aW, aN, aS, aP);
         end
         
-%         omegacoeff();
-%         for iter_Omega = 1:OMEGA_ITER
-%             Omega = solve(Omega, b, aE, aW, aN, aS, aP);
-%         end
+        omegacoeff();
+        for iter_Omega = 1:OMEGA_ITER
+            Omega = solve(Omega, b, aE, aW, aN, aS, aP);
+        end
         
         viscosity();
         bound();
@@ -134,7 +134,7 @@ for time = Dt:Dt:TOTAL_TIME
     fprintf ("%4d %10.3e\t%10.2e\t%10.2e\t%10.2e\t%10.2e\t%10.2e\n",iter,...
         time,u(ceil(3*(NPI+1)/10),ceil(2*(NPJ+1)/5)),v(ceil(3*(NPI+1)/10),ceil(2*(NPJ+1)/5)),...
         T(ceil(3*(NPI+1)/10),ceil(2*(NPJ+1)/5)), SMAX, SAVG);
-    % end: printConv(time, iter)===========================================
+%     % end: printConv(time, iter)===========================================
     
     % reset SMAX and SAVG
     SMAX = LARGE;
@@ -210,14 +210,14 @@ end % end of calculation
 %% plot vector map
 
 [X,Y]=meshgrid(y_v, x_u);
-% figure(1)
-% quiver(Y,X,u,v,0.05);
-% %axis equal;
+figure(1)
+quiver(Y,X,u,v,2);
+%axis equal;
 
 figure(2)
 surf(X,Y,u);
 
 
-figure(4)
+figure(3)
 surf(X,Y,p);
 
