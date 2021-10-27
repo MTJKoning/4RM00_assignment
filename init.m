@@ -120,7 +120,6 @@ m_out = 0.;    %1.;
 for i = 1:NPI+2
     for J = 1:NPJ+2
         u(i,J) = U_IN; %*1.5*(1.0-(2.0*(y(J)-YMAX/2)/YMAX)^2); % Velocity in x-direction
-    
     end
 end
 
@@ -133,7 +132,7 @@ Cp(:,:)    = 710;    % J/(K*kg) Heat capacity - assumed constant for this proble
 Gamma      = 0.024./Cp;% Thermal conductivity divided by heat capacity
 k(:,:)     = 1e-3;     % k
 eps(:,:)   = 1e-4;     % epsilon
-Omega = eps(:,:)./k(:,:);    % Omega --> Wilcox
+
 uplus(:,:) = 1.;       % uplus
 yplus1(:,:)= sqrt(rho .* u ./ mu) * (y(2) - y(1));   % yplus1
 yplus2(:,:)= sqrt(rho .* u ./ mu) * (y(NPJ+2) - y(NPJ+1));  % yplus2
@@ -146,6 +145,7 @@ pc_old     = pc;       % Pressure correction old timestep
 T_old      = T;        % Temperature old timestep
 eps_old    = eps;      % epsilon old timestep
 k_old      = k;        % k old timestep
+Omega_old  = Omega; 
 
 % Setting the relaxation parameters
 relax_u   = 0.8;            % See eq. 6.36
@@ -154,4 +154,5 @@ relax_pc  = 1.1 - relax_u;  % See eq. 6.33
 relax_T   = 1.0;            % Relaxation factor for temperature
 % end of initilization=====================================================
 end
+
 

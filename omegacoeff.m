@@ -44,7 +44,7 @@ for I = Istart:Iend
             mut(I,J+1)*(y_v(j+1)-y(J)))*AREAn + mu(I,J)/(x(I)-x(I-1))*AREAn;
         
         % The source terms
-        if J==2 
+        if J==2 || J ==NPJ+1 
             SP(I,J) = -LARGE;
             Su(I,J) = 6.*(mu(I,J)./rho(I,J))/(beta1.*yplus(I,J)^2)*LARGE;
         else

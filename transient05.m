@@ -9,18 +9,18 @@
 % Converted from C to Matlab by YTANG
 % References: 1. Computational Fluid Dynamics, H.K. Versteeg and W. Malalasekera, Longman Group Ltd, 1995
 
-clear all
+clear
 close all
 clc
 %% declare all variables and contants
-% variables
+% Variables
 global x x_u y y_v u v pc T rho mu Gamma b SMAX SAVG aP aE aW aN aS eps k...
-    u_old v_old pc_old T_old Dt eps_old k_old uplus yplus yplus1 yplus2 P_ATM Omega Omega_old Su
-% constants
+    u_old v_old pc_old T_old Dt eps_old k_old uplus yplus yplus1 yplus2 P_ATM Omega Omega_old Su m_out ratio_v ratio_u m_out_u m_out_v
+% Constants
 global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps sigmaw C1eps C2eps kappa ERough Ti p gamma1 beta1 beta_star
-%haalllloooo
-NPI        = 50;        % number of grid cells in x-direction [-]
-NPJ        = 25;        % number of grid cells in y-direction [-]
+
+NPI        = 30;        % number of grid cells in x-direction [-]
+NPJ        = 15;        % number of grid cells in y-direction [-]
 XMAX       = 50;        % width of the domain [m]
 YMAX       = 10;        % height of the domain [m]
 MAX_ITER   = 1000;       % maximum number of outer iterations [-]
@@ -116,7 +116,7 @@ for time = Dt:Dt:TOTAL_TIME
         v_old(2:NPI+1,3:NPJ+1)   = v(2:NPI+1,3:NPJ+1);        
         pc_old(2:NPI+1,2:NPJ+1)  = pc(2:NPI+1,2:NPJ+1);        
         T_old(2:NPI+1,2:NPJ+1)   = T(2:NPI+1,2:NPJ+1);        
-        eps_old(2:NPI+1,2:NPJ+1) = eps(2:NPI+1,2:NPJ+1);
+%         eps_old(2:NPI+1,2:NPJ+1) = eps(2:NPI+1,2:NPJ+1);
         k_old(2:NPI+1,2:NPJ+1)   = k(2:NPI+1,2:NPJ+1);
         Omega_old(2:NPI+1,2:NPJ+1) = Omega(2:NPI+1,2:NPJ+1);
         
@@ -134,15 +134,15 @@ for time = Dt:Dt:TOTAL_TIME
     fprintf ("%4d %10.3e\t%10.2e\t%10.2e\t%10.2e\t%10.2e\t%10.2e\n",iter,...
         time,u(ceil(3*(NPI+1)/10),ceil(2*(NPJ+1)/5)),v(ceil(3*(NPI+1)/10),ceil(2*(NPJ+1)/5)),...
         T(ceil(3*(NPI+1)/10),ceil(2*(NPJ+1)/5)), SMAX, SAVG);
-%     % end: printConv(time, iter)===========================================
+    % end: printConv(time, iter)===========================================
     
     % reset SMAX and SAVG
     SMAX = LARGE;
     SAVG = LARGE;   
 end % end of calculation
 
-% %% begin: output()
-% % Print all results in output.txt
+% % begin: output()
+% Print all results in output.txt
 % fp = fopen('output.txt','w');
 % for I = 1:NPI+1
 %     i = I;
@@ -158,7 +158,7 @@ end % end of calculation
 % end
 % fclose(fp);
 % 
-% % Plot vorticity in vort.txt
+% Plot vorticity in vort.txt
 % vort = fopen('vort.txt','w');
 % for I = 2:NPI+1
 %     i = I;
@@ -171,7 +171,7 @@ end % end of calculation
 % end
 % fclose(vort);
 % 
-% % Plot streamlines in str.txt
+% Plot streamlines in str.txt
 % str = fopen('str.txt', 'w');
 % for I = 1:NPI+1
 %     i = I;
@@ -184,7 +184,7 @@ end % end of calculation
 % end
 % fclose(str);
 % 
-% % Plot horizontal velocity components in velu.txt
+% Plot horizontal velocity components in velu.txt
 % velu = fopen('velu.txt','w');
 % for I = 2:NPI+2
 %     i = I;
@@ -195,7 +195,7 @@ end % end of calculation
 % end
 % fclose(velu);
 % 
-% % Plot vertical velocity components in velv.txt
+% Plot vertical velocity components in velv.txt
 % velv = fopen('velv.txt','w');
 % for I = 1:NPI+2
 %     for J = 2:NPJ+2
@@ -205,19 +205,15 @@ end % end of calculation
 %     fprintf(velv,'\n');
 % end
 % fclose(velv);
-% % end output()
+% end output()
 
 %% plot vector map
-
 [X,Y]=meshgrid(y_v, x_u);
-figure(1)
-quiver(Y,X,u,v,2);
+quiver(X,Y,u,v,0.05);
 %axis equal;
 
 figure(2)
 surf(X,Y,u);
 
-
 figure(3)
 surf(X,Y,p);
-
