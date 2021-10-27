@@ -65,8 +65,31 @@ for I = Istart:Iend
             SP(I,j)=0;
 
         end
+<<<<<<< Updated upstream
 
             
+=======
+        
+        if (I == ceil((NPI+1)/10 + 35) && j < ceil((NPJ+1)/3))     % left of baffle #1
+            aE(I,j) = 0;
+            SP(I,j)=0;
+        end
+        if (I == ceil((NPI+1)/10 + 50)   && j < ceil((NPJ+1)/3))     % right of baffle #1
+            aW(I,j) = 0;
+            SP(I,j)=0;
+
+        end
+        
+         if (I == ceil((NPI+1)/10 + 70) && j < ceil((NPJ+1)/3))     % left of baffle #1
+            aE(I,j) = 0;
+            SP(I,j)=0;
+        end
+        if (I == ceil((NPI+1)/10 + 85)   && j < ceil((NPJ+1)/3))     % right of baffle #1
+            aW(I,j) = 0;
+            SP(I,j)=0;
+
+        end
+>>>>>>> Stashed changes
 
         % eq. 8.31 without time dependent terms (see also eq. 5.14):
         aP(I,j) = aW(I,j) + aE(I,j) + aS(I,j) + aN(I,j) + Fe - Fw + Fn - Fs - SP(I,J) + aPold;

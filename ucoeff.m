@@ -66,9 +66,27 @@ for I = Istart:Iend
                 SP(i,J) = -1e30;
         end
         end
+<<<<<<< Updated upstream
 
         %baffle road
                
+=======
+    
+        for kk=35:50
+        if (i == ceil((NPI+1)/10 + kk) && J < ceil((NPJ+1)/3))
+                SP(i,J) = -1e30;
+              
+        end
+        end
+        
+         for kk=70:85
+        if (i == ceil((NPI+1)/10 + kk) && J < ceil((NPJ+1)/3))
+                SP(i,J) = -1e30;
+        end
+        end
+        
+
+>>>>>>> Stashed changes
         % The coefficients (hybrid differencing scheme)
         aW(i,J) = max([ Fw, Dw + Fw/2, 0.]);
         aE(i,J) = max([-Fe, De - Fe/2, 0.]);
@@ -81,7 +99,7 @@ for I = Istart:Iend
 %         if J==NPJ+1
 %             aN(i,J) = 0.;
 %         else
-%             aN(i,J) = max([-Fn, Dn - Fn/2, 0.]);
+            aN(i,J) = max([-Fn, Dn - Fn/2, 0.]);
 %         end
         
         aPold   = 0.5*(rho(I-1,J) + rho(I,J))*AREAe*AREAn/Dt;

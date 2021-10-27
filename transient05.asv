@@ -46,7 +46,7 @@ kappa      = 0.4187;
 ERough     = 9.793;
 Ti         = 0.04;
 
-Dt         = XMAX/NPI/U_IN;
+Dt         = 1/50;
 TOTAL_TIME = 1.;
 
 %% start main function here
@@ -212,4 +212,4 @@ surf(X,Y,p);
 
 
 figure(4)
-plot(Y(2:NPI,6),p(2:NPI,6));
+plot(x,p(2:NPI,6));
