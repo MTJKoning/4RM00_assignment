@@ -66,11 +66,6 @@ for I = Istart:Iend
                 SP(i,J) = -1e30;
         end
         end
-<<<<<<< Updated upstream
-
-        %baffle road
-               
-=======
     
         for kk=35:50
         if (i == ceil((NPI+1)/10 + kk) && J < ceil((NPJ+1)/3))
@@ -86,7 +81,6 @@ for I = Istart:Iend
         end
         
 
->>>>>>> Stashed changes
         % The coefficients (hybrid differencing scheme)
         aW(i,J) = max([ Fw, Dw + Fw/2, 0.]);
         aE(i,J) = max([-Fe, De - Fe/2, 0.]);

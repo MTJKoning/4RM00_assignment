@@ -75,38 +75,14 @@ u(NPI+2,2:NPJ+1) = u(NPI+1,2:NPJ+1)* m_in / m_out_u;
 v(NPI+2,2:NPJ+1) = v(NPI+1,2:NPJ+1);
 
 % Top side no wall
-<<<<<<< Updated upstream
- u(2:NPI+1,NPJ+1) = u(2:NPI+1,NPJ+1);
- v(2:NPI+1,NPJ+1) = v(2:NPI+1,NPJ+1); 
-% Pressure left side
-p(NPI+2,2:NPJ+1) = p(NPI+1,2:NPJ+1);
-p(NPI+2,2:NPJ+1) = p(NPI+1,2:NPJ+1);
-% Top side no wall
-p(2:NPI+1,NPJ+2) = p(2:NPI+1,NPJ+1);
-p(2:NPI+1,NPJ+2) = p(2:NPI+1,NPJ+1);
-% Pressure right side
-p(1,2:NPJ+1) = p(2,2:NPJ+1);
-p(1,2:NPJ+1) = p(2,2:NPJ+1);
-% down side no wall
-% p(2:NPI+1,1) = p(2:NPI+1,2);
-% p(2:NPI+1,1) = p(2:NPI+1,2);
-% 
-=======
+
 u(2:NPI+1,NPJ+2) = u(2:NPI+1,NPJ+1);
 % v(2:NPI+1,NPJ+2) = v(2:NPI+1,NPJ+1) * m_in / m_out_v; 
-
-% Pressure left side
-% p(NPI+2,2:NPJ+1) = p(NPI+1,2:NPJ+1);
-% Top side no wall
-% p(2:NPI+1,NPJ+2) = p(2:NPI+1,NPJ+1);
-% Pressure right side
-% p(1,2:NPJ+1) = p(2,2:NPJ+1);
 
 k(2:NPI+1,NPJ+2) = u(2:NPI+1,NPJ+1);
 eps(2:NPI+1,NPJ+2) = u(2:NPI+1,NPJ+1);
 T(2:NPI+1,NPJ+2) = u(2:NPI+1,NPJ+1);
 
->>>>>>> Stashed changes
 k(NPI+2,2:NPJ+1) = k(NPI+1,2:NPJ+1);
 eps(NPI+2,2:NPJ+1) = eps(NPI+1,2:NPJ+1);
 T(NPI+2,1:NPJ+2) = T(NPI+1,1:NPJ+2);
