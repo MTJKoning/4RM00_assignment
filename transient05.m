@@ -17,11 +17,13 @@ clc
 global x x_u y y_v u v pc T rho mu Gamma b SMAX SAVG aP aE aW aN aS eps k...
     u_old v_old pc_old T_old Dt eps_old k_old uplus yplus yplus1 yplus2 P_ATM F_u F_v ratio_u ratio_v m_
 % constants
-global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps C1eps C2eps kappa ERough Ti p
-%haalllloooo
+global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps C1eps C2eps kappa ERough Ti p Y_truck X_truck X_distance
+Y_truck    = 2.70;       %height of a truck [m]
+X_truck    = 15;         %length of a truck [m] 
+X_distance = 1;          %distance between trucks [m]
 NPI        = 100;        % number of grid cells in x-direction [-]
-NPJ        = 40;        % number of grid cells in y-direction [-]
-XMAX       = 50;        % width of the domain [m]
+NPJ        = 50;        % number of grid cells in y-direction [-]
+XMAX       = 60;        % width of the domain [m]
 YMAX       = 20;        % height of the domain [m]
 MAX_ITER   = 1000;      % maximum number of outer iterations [-]
 U_ITER     = 1;         % number of Newton iterations for u equation [-]
@@ -196,7 +198,6 @@ end % end of calculation
 % % end output()
 
 %% plot vector map
-
 [X,Y]=meshgrid(y_v, x_u);
 figure(1)
 quiver(Y,X,u,v,3);
@@ -205,11 +206,18 @@ axis equal;
 figure(2)
 surf(X,Y,u);
 
-
-
 figure(3)
 surf(X,Y,p);
 
-
 figure(4)
 plot(Y(2:NPI,6),p(2:NPI,6));
+hold on
+plot(Y(2:NPI,NPJ-1),p(2:NPI,NPJ-1));
+hold off
+
+figure(5)
+plot(Y(2:NPI,6),u(2:NPI,6));
+hold on
+plot(Y(2:NPI,NPJ-1),u(2:NPI,NPJ-1));
+
+

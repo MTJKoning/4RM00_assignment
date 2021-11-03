@@ -70,12 +70,12 @@ for I = Istart:Iend
         end
         end
     
-        for kk=(5+NPI_truck + NPI_dis):(5+2*NPI_truck + NPI_dis)
-        if (i == ceil(kk) && J < ceil(NPI_height))
-                SP(i,J) = -1e30;
-               
-        end
-        end
+%         for kk=(5+NPI_truck + NPI_dis):(5+2*NPI_truck + NPI_dis)
+%         if (i == ceil(kk) && J < ceil(NPI_height))
+%                 SP(i,J) = -1e30;
+%                
+%         end
+%         end
 %         
 %         for kk=(5+2*NPI_truck + 2*NPI_dis):(5+3*NPI_truck + 2*NPI_dis)
 %         if (i == ceil(kk) && J < ceil(NPI_height))

@@ -58,7 +58,7 @@ for I = Istart:Iend
         % transport of v through the baffles can be switched off by setting the coefficients to zero
         NPI_truck=NPI*X_truck/XMAX;
         NPI_dis=NPI*X_distance/XMAX;
-        NPI_height=NPI*Y_truck/YMAX;
+        NPI_height=NPI*X_truck/YMAX;
         
         
         if (I == ceil(5) && j < ceil(NPI_height))     % left of baffle #1
@@ -69,21 +69,21 @@ for I = Istart:Iend
         end
 
         
-        if (I == ceil(5+NPI_truck+NPI_dis) && j < ceil(NPI_height))     % left of baffle #1
+        if (I == ceil(5+NPI_truck) && j < ceil(NPI_height))     % left of baffle #1
             aE(I,j) = 0;
         end
-        if (I == ceil(5+2*NPI_truck+NPI_dis)   && j < ceil(NPI_height))     % right of baffle #1
+        if (I == ceil((NPI+1)/10 + 60)   && j < ceil(NPI_height))     % right of baffle #1
             aW(I,j) = 0;
 
         end
-%         
-%          if (I == ceil(5+2*NPI_truck+2*NPI_dis) && j < ceil(NPI_height))     % left of baffle #1
-%             aE(I,j) = 0;
-%         end
-%         if (I == ceil(5+3*NPI_truck+2*NPI_dis)   && j < ceil(NPI_height))     % right of baffle #1
-%             aW(I,j) = 0;
-% 
-%         end
+        
+         if (I == ceil((NPI+1)/10 + 70) && j < ceil(NPI_height))     % left of baffle #1
+            aE(I,j) = 0;
+        end
+        if (I == ceil((NPI+1)/10 + 85)   && j < ceil(NPI_height))     % right of baffle #1
+            aW(I,j) = 0;
+
+        end
 
         % eq. 8.31 without time dependent terms (see also eq. 5.14):
         aP(I,j) = aW(I,j) + aE(I,j) + aS(I,j) + aN(I,j) + Fe - Fw + Fn - Fs - SP(I,J) + aPold;

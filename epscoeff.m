@@ -45,7 +45,7 @@ for I = Istart:Iend
             mut(I,J+1)*(y_v(j+1)-y(J)))*AREAn;
         
         % The source terms
-        if J==2 
+        if J==2 || J == NPJ+1
             SP(I,J) = -LARGE;
             Su(I,J) = Cmu^0.75*k(I,J)^1.5/(kappa*0.5*AREAw)*LARGE;
         else
@@ -55,7 +55,33 @@ for I = Istart:Iend
         
         Su(I,J) =  Su(I,J)*AREAw*AREAs;
         SP(I,J) =  SP(I,J)*AREAw*AREAs;
-        
+%         
+%                 % transport of v through the baffles can be switched off by setting the coefficients to zero
+%         if (I == ceil((NPI+1)/5) && j < ceil((NPJ+1)/3))     % left of baffle #1
+%             aE(I,j) = 0;
+%         end
+%         if (I == ceil((NPI+1)/5 + 25)   && j < ceil((NPJ+1)/3))     % right of baffle #1
+%             aW(I,j) = 0;
+%         end
+% 
+%         
+%         if (I == ceil((NPI+1)/10 + 35) && j < ceil((NPJ+1)/3))     % left of baffle #1
+%             aE(I,j) = 0;
+%         end
+%         if (I == ceil((NPI+1)/10 + 60)   && j < ceil((NPJ+1)/3))     % right of baffle #1
+%             aW(I,j) = 0;
+% 
+%         end
+%         
+%          if (I == ceil((NPI+1)/10 + 70) && j < ceil((NPJ+1)/3))     % left of baffle #1
+%             aE(I,j) = 0;
+%         end
+%         if (I == ceil((NPI+1)/10 + 85)   && j < ceil((NPJ+1)/3))     % right of baffle #1
+%             aW(I,j) = 0;
+% 
+%         end
+
+
         % The coefficients (hybrid differencing scheme)
         aW(I,J) = max([ Fw, Dw + Fw/2, 0.]);
         aE(I,J) = max([-Fe, De - Fe/2, 0.]);
