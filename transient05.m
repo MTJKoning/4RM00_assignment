@@ -18,12 +18,12 @@ global x x_u y y_v u v pc T rho mu Gamma b SMAX SAVG aP aE aW aN aS eps k...
     u_old v_old pc_old T_old Dt eps_old k_old uplus yplus yplus1 yplus2 P_ATM F_u F_v ratio_u ratio_v m_
 % constants
 global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps C1eps C2eps kappa ERough Ti p Y_truck X_truck X_distance
-Y_truck    = 2.70;       %height of a truck [m]
-X_truck    = 15;         %length of a truck [m] 
-X_distance = 1;          %distance between trucks [m]
+Y_truck    = 2.70/2;       % 2.70height of a truck [m]
+X_truck    = 15/2;         % 15 length of a truck [m] 
+X_distance = 5;          % 2 distance between trucks [m]
 NPI        = 100;        % number of grid cells in x-direction [-]
 NPJ        = 50;        % number of grid cells in y-direction [-]
-XMAX       = 60;        % width of the domain [m]
+XMAX       = 3* X_truck + 2* X_distance + 5;        % width of the domain [m]
 YMAX       = 20;        % height of the domain [m]
 MAX_ITER   = 1000;      % maximum number of outer iterations [-]
 U_ITER     = 1;         % number of Newton iterations for u equation [-]

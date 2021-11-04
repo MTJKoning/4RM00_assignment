@@ -51,9 +51,9 @@ for I = Istart:Iend
             mut(I,J+1)*(y_v(j+1)-y(J)))*AREAn;
         
         % The source terms
-        if J==NPJ+1 || J==2 && I<15 || J==2 && I>(15+NPI_truck)|| J==2 && I<(15+NPI_truck + NPI_dis) ||...
-                J==2 && I>(15+2*NPI_truck + NPI_dis) %|| J==2 && I<(15+2*NPI_truck + 2*NPI_dis) ||...
-                %J==2 && I>(15+3*NPI_truck + 2*NPI_dis)
+        if J==2 && I<15 || J==2 && I>(15+NPI_truck)|| J==2 && I<(15+NPI_truck + NPI_dis) ||...
+                J==2 && I>(15+2*NPI_truck + NPI_dis)||  J==2 && I<(15+2*NPI_truck + 2*NPI_dis) ||...
+                J==2 && I>(15+3*NPI_truck + 2*NPI_dis) ||J==NPJ+1
             SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
             Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
         else
@@ -103,22 +103,22 @@ for I = Istart:Iend
 
                 % Truck3
 
-%         
-%         if (i == ceil(15+2*NPI_truck+2*NPI_dis) && J < ceil(NPI_height))
-%             SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
-%             Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
-%         end
-%         
-%       
-%         if (i == ceil(15+3*NPI_truck+2*NPI_dis) && J < ceil(NPI_height))
-%             SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
-%             Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
-%         end
-%         
-%         if (i >= ceil(15+2*NPI_truck+2*NPI_dis) && i <= ceil(15+3*NPI_truck+2*NPI_dis) && J == ceil(NPI_height))
-%             SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAs)*AREAw*AREAs;
-%             Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAs)*AREAw*AREAs;
-%         end
+        
+        if (i == ceil(15+2*NPI_truck+2*NPI_dis) && J < ceil(NPI_height))
+            SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
+            Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
+        end
+        
+      
+        if (i == ceil(15+3*NPI_truck+2*NPI_dis) && J < ceil(NPI_height))
+            SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
+            Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
+        end
+        
+        if (i >= ceil(15+2*NPI_truck+2*NPI_dis) && i <= ceil(15+3*NPI_truck+2*NPI_dis) && J == ceil(NPI_height))
+            SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAs)*AREAw*AREAs;
+            Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAs)*AREAw*AREAs;
+        end
 
 
         

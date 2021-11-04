@@ -61,26 +61,26 @@ for I = Istart:Iend
         NPI_height=NPI*Y_truck/YMAX;
         
         
-        if (I == ceil(5) && j < ceil(NPI_height))     % left of baffle #1
+        if (I == ceil(15) && j < ceil(NPI_height))     % left of baffle #1
             aE(I,j) = 0;
         end
-        if (I == ceil(5+NPI_truck)   && j < ceil(NPI_height))     % right of baffle #1
+        if (I == ceil(15+NPI_truck)   && j < ceil(NPI_height))     % right of baffle #1
             aW(I,j) = 0;
         end
 
         
-        if (I == ceil(5+NPI_truck+NPI_dis) && j < ceil(NPI_height))     % left of baffle #1
+        if (I == ceil(15+NPI_truck+NPI_dis) && j < ceil(NPI_height))     % left of baffle #1
             aE(I,j) = 0;
         end
-        if (I == ceil(5+2*NPI_truck+NPI_dis)   && j < ceil(NPI_height))     % right of baffle #1
+        if (I == ceil(15+2*NPI_truck+NPI_dis)   && j < ceil(NPI_height))     % right of baffle #1
             aW(I,j) = 0;
 
         end
-%         
-%          if (I == ceil(5+2*NPI_truck+2*NPI_dis) && j < ceil(NPI_height))     % left of baffle #1
+        
+%          if (I == ceil(15+2*NPI_truck+2*NPI_dis) && j < ceil(NPI_height))     % left of baffle #1
 %             aE(I,j) = 0;
 %         end
-%         if (I == ceil(5+3*NPI_truck+2*NPI_dis)   && j < ceil(NPI_height))     % right of baffle #1
+%         if (I == ceil(15+3*NPI_truck+2*NPI_dis)   && j < ceil(NPI_height))     % right of baffle #1
 %             aW(I,j) = 0;
 % 
 %         end

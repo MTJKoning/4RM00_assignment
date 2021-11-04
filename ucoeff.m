@@ -59,30 +59,31 @@ for I = Istart:Iend
         
         
         % u can be fixed to zero by setting SP to a very large value at the
-        % baffle
+        % baffle 
         NPI_truck=NPI*X_truck/XMAX;
         NPI_dis=NPI*X_distance/XMAX;
         NPI_height=NPI*Y_truck/YMAX;
         
-        for kk=5:(5+NPI_truck) 
+        for kk=15:(15+NPI_truck) 
         if (i == ceil(kk) && J < ceil(NPI_height))
                 SP(i,J) = -1e30;
         end
         end
+       
     
-        for kk=(5+NPI_truck + NPI_dis):(5+2*NPI_truck + NPI_dis)
+        for kk=(15+NPI_truck + NPI_dis):(15+2*NPI_truck + NPI_dis)
         if (i == ceil(kk) && J < ceil(NPI_height))
                 SP(i,J) = -1e30;
                
         end
         end
 %         
-%         for kk=(5+2*NPI_truck + 2*NPI_dis):(5+3*NPI_truck + 2*NPI_dis)
+%         for kk=(15+2*NPI_truck+2*NPI_dis):(15+3*NPI_truck+2*NPI_dis)
 %         if (i == ceil(kk) && J < ceil(NPI_height))
 %                 SP(i,J) = -1e30;
 %         end
 %         end
-%         
+        
 
         % The coefficients (hybrid differencing scheme)
         aW(i,J) = max([ Fw, Dw + Fw/2, 0.]);
