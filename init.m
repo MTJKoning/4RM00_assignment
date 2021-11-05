@@ -123,7 +123,7 @@ for i = 1:NPI+2
 end
 
 v(:,:)     = 0.;       % Velocity in y-direction
-p(:,:)     = 0;     % Relative pressure
+p(:,:)     = P_ATM;     % Relative pressure
 T(:,:)     = 283.;     % Temperature
 rho(:,:)   = 1.29;      % Density
 mu(:,:)    = 1.8E-5;    % Viscosity

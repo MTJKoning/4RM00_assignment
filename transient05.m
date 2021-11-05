@@ -15,9 +15,11 @@ clc
 %% declare all variables and contants
 % variables
 global x x_u y y_v u v pc T rho mu Gamma b SMAX SAVG aP aE aW aN aS eps k...
-    u_old v_old pc_old T_old Dt eps_old k_old uplus yplus yplus1 yplus2 P_ATM F_u F_v ratio_u ratio_v beta1 gamma1 sigmaw beta_star
+    u_old v_old pc_old T_old Dt eps_old k_old uplus yplus yplus1 yplus2 P_ATM ...
+    F_u F_v ratio_u ratio_v beta1 gamma1 sigmaw beta_star
 % constants
-global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps C1eps C2eps kappa ERough Ti p Y_truck X_truck X_distance
+global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps C1eps C2eps ...
+    kappa ERough Ti p Y_truck X_truck X_distance NPI_truck NPI_dis NPI_height dudy
 Y_truck    = 2.70/2;       % 2.70height of a truck [m]
 X_truck    = 15/2;         % 15 length of a truck [m] 
 X_distance = 5;          % 2 distance between trucks [m]
@@ -38,7 +40,9 @@ LARGE      = 1E30;      % arbitrary very large value [-]
 SMALL      = 1E-30;     % arbitrary very small value [-]
 P_ATM      = 101000.;   % athmospheric pressure [Pa]
 U_IN       = 80/3.6;       % in flow velocity [m/s]
-
+NPI_truck=NPI*X_truck/XMAX;
+NPI_dis=NPI*X_distance/XMAX;
+NPI_height=NPJ*Y_truck/YMAX;
 Cmu        = 0.09;
 sigmak     = 2.0;
 sigmaeps   = 1.3;
