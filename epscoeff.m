@@ -44,15 +44,25 @@ for I = Istart:Iend
         Dn = mut(I,J)*mut(I,J+1)/sigmaeps/(mut(I,J)*(y(J+1) - y_v(j+1)) + ...
             mut(I,J+1)*(y_v(j+1)-y(J)))*AREAn;
         
-        % The source terms
-        if J==NPJ+1 || J==2 && I<15 || J==2 && I>(15+NPI_truck) || J==2 && I<(15+NPI_truck + NPI_dis) ||...
-                J==2 && I>(15+2*NPI_truck + NPI_dis)% ||  J==2 && I<(15+2*NPI_truck + 2*NPI_dis) ||...
-               % J==2 && I>(15+3*NPI_truck + 2*NPI_dis)
+%         % The source terms k - e model
+%         if J==NPJ+1 || J==2 && I<15 || J==2 && I>(15+NPI_truck) || J==2 && I<(15+NPI_truck + NPI_dis) ||...
+%                 J==2 && I>(15+2*NPI_truck + NPI_dis)% ||  J==2 && I<(15+2*NPI_truck + 2*NPI_dis) ||...
+%                % J==2 && I>(15+3*NPI_truck + 2*NPI_dis)
+%             SP(I,J) = -LARGE;
+%             Su(I,J) = Cmu^0.75*k(I,J)^1.5/(kappa*0.5*AREAw)*LARGE;
+%         else
+%             SP(I,J) = -C2eps*rho(I,J)*eps(I,J)/(k(I,J) + SMALL);
+%             Su(I,J) = C1eps*eps(I,J)/k(I,J)*2.*mut(I,J)*E2(I,J);
+%         end
+        
+        % The source terms k - omega model
+        if J==2 || J ==NPJ+1 && I<15 || J==2 && I>(15+NPI_truck) || J==2 && I<(15+NPI_truck + NPI_dis) ||...
+                J==2 && I>(15+2*NPI_truck + NPI_dis)
             SP(I,J) = -LARGE;
-            Su(I,J) = Cmu^0.75*k(I,J)^1.5/(kappa*0.5*AREAw)*LARGE;
+            Su(I,J) = 6.*(mu(I,J)./rho(I,J))/(beta1.*yplus(I,J)^2)*LARGE;
         else
-            SP(I,J) = -C2eps*rho(I,J)*eps(I,J)/(k(I,J) + SMALL);
-            Su(I,J) = C1eps*eps(I,J)/k(I,J)*2.*mut(I,J)*E2(I,J);
+            SP(I,J) = -beta1.*rho(I,J).*(Omega(I,J))^2;
+            Su(I,J) = gamma1.*(2.*rho(I,J)*E2(I,J))-2/3.*rho(I,J).*Omega(I,J).*dudx(I,J).*eq(I,J);
         end
         
         Su(I,J) =  Su(I,J)*AREAw*AREAs;

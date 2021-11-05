@@ -5,7 +5,7 @@ function [] = kcoeff()
 global NPI NPJ Dt Cmu sigmak
 % variables
 global x x_u y y_v SP Su F_u F_v mut rho u uplus tw Istart Iend ...
-    Jstart Jend b aE aW aN aS aP k k_old eps E2 XMAX X_truck X_distance YMAX Y_truck
+    Jstart Jend b aE aW aN aS aP k k_old eps E2 XMAX X_truck X_distance YMAX Y_truck LARGE 
 
 
 NPI_truck=NPI*X_truck/XMAX;
@@ -50,15 +50,25 @@ for I = Istart:Iend
         Dn = mut(I,J)*mut(I,J+1)/sigmak/(mut(I,J)*(y(J+1) - y_v(j+1)) + ...
             mut(I,J+1)*(y_v(j+1)-y(J)))*AREAn;
         
-        % The source terms
-        if J==NPJ+1 || J==2 && I<15 || J==2 && I>(15+NPI_truck)|| J==2 && I<(15+NPI_truck + NPI_dis) ||...
-                J==2 && I>(15+2*NPI_truck + NPI_dis) %|| J==2 && I<(15+2*NPI_truck + 2*NPI_dis) ||...
-                %J==2 && I>(15+3*NPI_truck + 2*NPI_dis)
-            SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
-            Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
+%         % The source terms k - epsilon
+%         if J==NPJ+1 || J==2 && I<15 || J==2 && I>(15+NPI_truck)|| J==2 && I<(15+NPI_truck + NPI_dis) ||...
+%                 J==2 && I>(15+2*NPI_truck + NPI_dis) %|| J==2 && I<(15+2*NPI_truck + 2*NPI_dis) ||...
+%                 %J==2 && I>(15+3*NPI_truck + 2*NPI_dis)
+%             SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
+%             Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
+%         else
+%             SP(I,J) = -rho(I,J)*eps(I,J)/k(I,J);
+%             Su(I,J) = 2.0*mut(I,J)*E2(I,J);
+%         end
+        
+        % The source terms k - omega
+        if J==2 || J ==NPJ+1 && I<15 || J==2 && I>(15+NPI_truck)|| J==2 && I<(15+NPI_truck + NPI_dis) ||...
+                J==2 && I>(15+2*NPI_truck + NPI_dis)
+            SP(I,J) = -LARGE;
+            Su(I,J) = 6.*(mu(I,J)./rho(I,J))/(beta1.*yplus(I,J)^2)*LARGE;
         else
-            SP(I,J) = -rho(I,J)*eps(I,J)/k(I,J);
-            Su(I,J) = 2.0*mut(I,J)*E2(I,J);
+            SP(I,J) = -beta1.*rho(I,J).*(Omega(I,J))^2;
+            Su(I,J) = gamma1.*(2.*rho(I,J)*E2(I,J))-2/3.*rho(I,J).*Omega(I,J).*dudx(I,J).*eq(I,J);
         end
         
         Su(I,J) =  Su(I,J)*AREAw*AREAs;
