@@ -2,10 +2,12 @@ function [] = epscoeff()
 % Purpose: To calculate the coefficients for the epsilon.
 
 % constants
-global NPI NPJ Dt Cmu LARGE SMALL sigmaeps kappa C1eps C2eps XMAX X_truck X_distance YMAX Y_truck
+global NPI NPJ Dt Cmu LARGE SMALL sigmaeps kappa C1eps C2eps XMAX ... 
+    X_truck X_distance YMAX Y_truck 
 % variables
 global x x_u y y_v SP Su F_u F_v mut rho Istart Iend ...
-    Jstart Jend b aE aW aN aS aP k eps E2 eps_old
+    Jstart Jend b aE aW aN aS aP k eps E2 eps_old beta1 gamma1 sigmaw ... 
+    beta_star mu yplus dudx
 
 Istart = 2;
 Iend = NPI+1;
@@ -35,24 +37,34 @@ for I = Istart:Iend
         % eq. 6.9e-6.9h - the transport by diffusion defined in eq. 5.8b
         % note: D = mu/Dx but Dw = (mu/Dx)*AREAw per definition
         % The conductivity, Gamma, at the interface is calculated with the use of a harmonic mean.
-        Dw = mut(I-1,J)*mut(I,J)/sigmaeps/(mut(I-1,J)*(x(I) - x_u(i)) + ...
+        Dw = mut(I-1,J)*mut(I,J)/sigmaw/(mut(I-1,J)*(x(I) - x_u(i)) + ...
             mut(I,J)*(x_u(i)-x(I-1)))*AREAw;
-        De = mut(I,J)*mut(I+1,J)/sigmaeps/(mut(I,J)*(x(I+1) - x_u(i+1)) + ...
+        De = mut(I,J)*mut(I+1,J)/sigmaw/(mut(I,J)*(x(I+1) - x_u(i+1)) + ...
             mut(I+1,J)*(x_u(i+1)-x(I)))*AREAe;
-        Ds = mut(I,J-1)*mut(I,J)/sigmaeps/(mut(I,J-1)*(y(J) - y_v(j)) + ...
+        Ds = mut(I,J-1)*mut(I,J)/sigmaw/(mut(I,J-1)*(y(J) - y_v(j)) + ...
             mut(I,J)*(y_v(j)-y(J-1)))*AREAs;
-        Dn = mut(I,J)*mut(I,J+1)/sigmaeps/(mut(I,J)*(y(J+1) - y_v(j+1)) + ...
+        Dn = mut(I,J)*mut(I,J+1)/sigmaw/(mut(I,J)*(y(J+1) - y_v(j+1)) + ...
             mut(I,J+1)*(y_v(j+1)-y(J)))*AREAn;
         
-        % The source terms
-        if J==NPJ+1 || J==2 && I<15 || J==2 && I>(15+NPI_truck) || J==2 && I<(15+NPI_truck + NPI_dis) ||...
-                J==2 && I>(15+2*NPI_truck + NPI_dis)% ||  J==2 && I<(15+2*NPI_truck + 2*NPI_dis) ||...
-               % J==2 && I>(15+3*NPI_truck + 2*NPI_dis)
+%         % The source terms k - e model
+%         if J==NPJ+1 || J==2 && I<15 || J==2 && I>(15+NPI_truck) || J==2 && I<(15+NPI_truck + NPI_dis) ||...
+%                 J==2 && I>(15+2*NPI_truck + NPI_dis)% ||  J==2 && I<(15+2*NPI_truck + 2*NPI_dis) ||...
+%                % J==2 && I>(15+3*NPI_truck + 2*NPI_dis)
+%             SP(I,J) = -LARGE;
+%             Su(I,J) = Cmu^0.75*k(I,J)^1.5/(kappa*0.5*AREAw)*LARGE;
+%         else
+%             SP(I,J) = -C2eps*rho(I,J)*eps(I,J)/(k(I,J) + SMALL);
+%             Su(I,J) = C1eps*eps(I,J)/k(I,J)*2.*mut(I,J)*E2(I,J);
+%         end
+        
+        % The source terms k - omega model
+        if J==2 || J ==NPJ+1 && I<15 || J==2 && I>(15+NPI_truck) || J==2 && I<(15+NPI_truck + NPI_dis) ||...
+                J==2 && I>(15+2*NPI_truck + NPI_dis)
             SP(I,J) = -LARGE;
-            Su(I,J) = Cmu^0.75*k(I,J)^1.5/(kappa*0.5*AREAw)*LARGE;
+            Su(I,J) = 6.*(mu(I,J)./rho(I,J))/(beta1.*yplus(I,J)^2)*LARGE;
         else
-            SP(I,J) = -C2eps*rho(I,J)*eps(I,J)/(k(I,J) + SMALL);
-            Su(I,J) = C1eps*eps(I,J)/k(I,J)*2.*mut(I,J)*E2(I,J);
+            SP(I,J) = -beta1.*rho(I,J).*(eps(I,J))^2;
+            Su(I,J) = gamma1.*(2.*rho(I,J)*E2(I,J))-2/3.*rho(I,J).*eps(I,J).*dudx(I,J).*eq(I,J);
         end
         
         Su(I,J) =  Su(I,J)*AREAw*AREAs;
