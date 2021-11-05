@@ -202,10 +202,10 @@ end % end of calculation
 % % end output()
 
 %% plot vector map
+figure(7)
 [X,Y]=meshgrid(y_v, x_u);
-figure(1)
 quiver(Y,X,u,v,3);
-axis equal;
+%axis equal;
 
 figure(2)
 surf(X,Y,u);
@@ -225,3 +225,28 @@ hold on
 plot(Y(2:NPI,NPJ-1),u(2:NPI,NPJ-1));
 
 
+p_truck1front=p(15,6);
+p_truck2front=p(ceil(15+NPI_truck + NPI_dis),6);
+p_truck3front=p(ceil(15+2*NPI_truck + 2*NPI_dis),6);
+
+p_truck1=p(15,NPJ-1);
+p_truck2=p(ceil(15+NPI_truck + NPI_dis),NPJ-1);
+p_truck3=p(ceil(15+2*NPI_truck + 2*NPI_dis),NPJ-1);
+
+u_truck1front=u(15 -1,6);
+u_truck2front=u(ceil(15+NPI_truck + NPI_dis - 1),6);
+u_truck3front=u(ceil(15+2*NPI_truck + 2*NPI_dis -1),6);
+
+rho=1.29;
+
+Cp1=(p_truck1front-p_truck1)/(0.5* rho * U_IN);
+Cp2=(p_truck2front-p_truck2)/(0.5* rho * U_IN);
+Cp3=(p_truck3front-p_truck3)/(0.5* rho * U_IN);
+
+Cf1=2*(sqrt((mu(3,3)*dudy(15 -1,6)/rho)/U_IN))^2;
+Cf2=2*(sqrt((mu(3,3)*dudy(ceil(15+NPI_truck + NPI_dis - 1),6))/rho)/U_IN)^2;
+Cf3=2*(sqrt((mu(3,3)*dudy(ceil(15+2*NPI_truck + 2*NPI_dis -1),6))/rho)/U_IN)^2;
+
+F1=0.5*rho*u_truck1front^2*(Cp1+Cf1);
+F2=0.5*rho*u_truck2front^2*(Cp2+Cf2);
+F3=0.5*rho*u_truck3front^2*(Cp3+Cf3);
