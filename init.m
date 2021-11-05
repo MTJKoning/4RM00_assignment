@@ -2,12 +2,12 @@ function [] = init()
 % Purpose: To initilise all parameters.
 
 % constants
-global NPI NPJ LARGE U_IN XMAX YMAX P_ATM
+global NPI NPJ LARGE U_IN XMAX YMAX
 % variables
 global x x_u y y_v u v pc p T rho mu mut mueff Gamma Cp k eps delta E E2 yplus yplus1 ...
     yplus2 uplus tw b SP Su d_u d_v omega SMAX SAVG m_in m_out relax_u relax_v ...
     relax_pc relax_T aP aE aW aN aS F_u F_v u_old v_old pc_old T_old k_old ...
-    eps_old dudx dudy dvdx dvdy
+    eps_old dudx dudy dvdx dvdy P_ATM 
 
 % begin: memalloc()========================================================
 % allocate memory for variables
@@ -112,18 +112,17 @@ omega = 1.0; % Over-relaxation factor for SOR solver
 SMAX = LARGE;
 SAVG = LARGE;
 
-m_in  = 0.;   %1.;
-m_out = 0.;    %1.;
+m_in  = 1.;
+m_out = 1.;
 
-for i = 1:NPI+2
+for i = 1: NPI+2
     for J = 1:NPJ+2
         u(i,J) = U_IN;%*1.5*(1.0-(2.0*(y(J)-YMAX/2)/YMAX)^2); % Velocity in x-direction
-    
     end
 end
 
 v(:,:)     = 0.;       % Velocity in y-direction
-p(:,:)     = 0;     % Relative pressure
+p(:,:)     = P_ATM;       % Relative pressure
 T(:,:)     = 283.;     % Temperature
 rho(:,:)   = 1.29;      % Density
 mu(:,:)    = 1.8E-5;    % Viscosity
@@ -145,7 +144,7 @@ eps_old    = eps;      % epsilon old timestep
 k_old      = k;        % k old timestep
 
 % Setting the relaxation parameters
-relax_u   = 0.8;            % 0.8 See eq. 6.36
+relax_u   = 0.8;            % See eq. 6.36
 relax_v   = relax_u;        % See eq. 6.37
 relax_pc  = 1.1 - relax_u;  % See eq. 6.33
 relax_T   = 1.0;            % Relaxation factor for temperature

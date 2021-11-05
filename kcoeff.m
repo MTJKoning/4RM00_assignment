@@ -5,13 +5,8 @@ function [] = kcoeff()
 global NPI NPJ Dt Cmu sigmak
 % variables
 global x x_u y y_v SP Su F_u F_v mut rho u uplus tw Istart Iend ...
-    Jstart Jend b aE aW aN aS aP k k_old eps E2 XMAX X_truck X_distance YMAX Y_truck
+    Jstart Jend b aE aW aN aS aP k k_old eps E2
 
-
-NPI_truck=NPI*X_truck/XMAX;
-NPI_dis=NPI*X_distance/XMAX;
-NPI_height=NPI*Y_truck/YMAX;
-        
 Istart = 2;
 Iend = NPI+1;
 Jstart = 2;
@@ -51,9 +46,7 @@ for I = Istart:Iend
             mut(I,J+1)*(y_v(j+1)-y(J)))*AREAn;
         
         % The source terms
-        if J==NPJ+1 || J==2 && I<15 || J==2 && I>(15+NPI_truck)|| J==2 && I<(15+NPI_truck + NPI_dis) ||...
-                J==2 && I>(15+2*NPI_truck + NPI_dis) %|| J==2 && I<(15+2*NPI_truck + 2*NPI_dis) ||...
-                %J==2 && I>(15+3*NPI_truck + 2*NPI_dis)
+        if J==2 || J==NPJ+1
             SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
             Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
         else
@@ -63,64 +56,6 @@ for I = Istart:Iend
         
         Su(I,J) =  Su(I,J)*AREAw*AREAs;
         SP(I,J) =  SP(I,J)*AREAw*AREAs;
-        
-        
-                % u can be fixed to zero by setting SP to a very large value at the
-        % Truck1
-   
-        if (i == ceil(15) && J < ceil(NPI_height))
-            SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
-            Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
-        end
-    
-        if (i == ceil(15+NPI_truck) && J < ceil(NPI_height))
-            SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
-            Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
-        end
-        
-        if (i >= ceil(15) && i <= ceil(15+NPI_truck) && J == ceil(NPI_height))
-            SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAs)*AREAw*AREAs;
-            Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAs)*AREAw*AREAs;
-        end
-        
-                % Truck2
-
-        if (i == ceil(15+NPI_truck+NPI_dis) && J < ceil(NPI_height))
-            SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
-            Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
-        end
-        
-      
-        if (i == ceil(15+2*NPI_truck+NPI_dis) && J < ceil(NPI_height))
-            SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
-            Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
-        end
-        
-        if (i >= ceil(15+NPI_truck+NPI_dis) && i <= ceil(15+2*NPI_truck+NPI_dis) && J == ceil(NPI_height))
-            SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAs)*AREAw*AREAs;
-            Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAs)*AREAw*AREAs;
-        end
-
-                % Truck3
-
-%         
-%         if (i == ceil(15+2*NPI_truck+2*NPI_dis) && J < ceil(NPI_height))
-%             SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
-%             Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
-%         end
-%         
-%       
-%         if (i == ceil(15+3*NPI_truck+2*NPI_dis) && J < ceil(NPI_height))
-%             SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
-%             Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
-%         end
-%         
-%         if (i >= ceil(15+2*NPI_truck+2*NPI_dis) && i <= ceil(15+3*NPI_truck+2*NPI_dis) && J == ceil(NPI_height))
-%             SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAs)*AREAw*AREAs;
-%             Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAs)*AREAw*AREAs;
-%         end
-
-
         
         % The coefficients (hybrid differencing scheme)
         aW(I,J) = max([ Fw, Dw + Fw/2, 0.]);

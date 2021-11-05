@@ -2,7 +2,7 @@ function [] = epscoeff()
 % Purpose: To calculate the coefficients for the epsilon.
 
 % constants
-global NPI NPJ Dt Cmu LARGE SMALL sigmaeps kappa C1eps C2eps XMAX X_truck X_distance YMAX Y_truck
+global NPI NPJ Dt Cmu LARGE SMALL sigmaeps kappa C1eps C2eps
 % variables
 global x x_u y y_v SP Su F_u F_v mut rho Istart Iend ...
     Jstart Jend b aE aW aN aS aP k eps E2 eps_old
@@ -45,9 +45,7 @@ for I = Istart:Iend
             mut(I,J+1)*(y_v(j+1)-y(J)))*AREAn;
         
         % The source terms
-        if J==NPJ+1 || J==2 && I<15 || J==2 && I>(15+NPI_truck) || J==2 && I<(15+NPI_truck + NPI_dis) ||...
-                J==2 && I>(15+2*NPI_truck + NPI_dis)% ||  J==2 && I<(15+2*NPI_truck + 2*NPI_dis) ||...
-               % J==2 && I>(15+3*NPI_truck + 2*NPI_dis)
+        if J==2 || J==NPJ+1
             SP(I,J) = -LARGE;
             Su(I,J) = Cmu^0.75*k(I,J)^1.5/(kappa*0.5*AREAw)*LARGE;
         else
@@ -57,34 +55,7 @@ for I = Istart:Iend
         
         Su(I,J) =  Su(I,J)*AREAw*AREAs;
         SP(I,J) =  SP(I,J)*AREAw*AREAs;
-                % u can be fixed to zero by setting SP to a very large value at the
-        % baffle
-    
-        NPI_truck=NPI*X_truck/XMAX;
-        NPI_dis=NPI*X_distance/XMAX;
-        NPI_height=NPI*Y_truck/YMAX;
         
-        for kk=15:(15+NPI_truck) 
-        if (i == ceil(kk) && J < ceil(NPI_height))
-           SP(I,J) = -LARGE;
-           Su(I,J) = Cmu^0.75*k(I,J)^1.5/(kappa*0.5*AREAw)*LARGE;
-        end
-        end
-        
-        for kk=(15+NPI_truck+NPI_dis):(15+2*NPI_truck+NPI_dis)
-        if (i == ceil(kk) && J < ceil(NPI_height))
-           SP(I,J) = -LARGE;
-           Su(I,J) = Cmu^0.75*k(I,J)^1.5/(kappa*0.5*AREAw)*LARGE;
-        end
-        end
-%         
-%         for kk=(15+2*NPI_truck+2*NPI_dis):(15+3*NPI_truck+2*NPI_dis)
-%         if (i == ceil(kk) && J < ceil(NPI_height))
-%            SP(I,J) = -LARGE;
-%            Su(I,J) = Cmu^0.75*k(I,J)^1.5/(kappa*0.5*AREAw)*LARGE;
-%         end
-%         end
-
         % The coefficients (hybrid differencing scheme)
         aW(I,J) = max([ Fw, Dw + Fw/2, 0.]);
         aE(I,J) = max([-Fe, De - Fe/2, 0.]);

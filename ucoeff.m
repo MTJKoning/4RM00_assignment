@@ -5,7 +5,8 @@ function [] = ucoeff()
 global NPI NPJ Dt Cmu
 % variables
 global x x_u y y_v u p mu mueff SP Su F_u F_v d_u relax_u u_old rho Istart Iend ...
-    Jstart Jend b aE aW aN aS aP yplus uplus k dudx dvdx XMAX X_truck X_distance YMAX Y_truck
+    Jstart Jend b aE aW aN aS aP yplus uplus k dudx dvdx  NPI_truck NPI_dis NPI_height
+
 
 Istart = 3;
 Iend = NPI+1;
@@ -42,7 +43,7 @@ for I = Istart:Iend
         mus = 0.25*(mueff(I-1,J) + mueff(I,J) + mueff(I-1,J-1) + mueff(I,J-1));
         mun = 0.25*(mueff(I-1,J+1) + mueff(I,J+1) + mueff(I-1,J) + mueff(I,J));
         
-        if J==2 || J==NPI+1
+        if J==2 || J==NPJ+1
             if yplus(I,J) < 11.63
                 SP(i,J) = -mu(I,J)*AREAs/(0.5*AREAw);
             else
@@ -58,11 +59,10 @@ for I = Istart:Iend
         Su(i,J) =  Su(i,J)*AREAw*AREAs;
         
         
+        
         % u can be fixed to zero by setting SP to a very large value at the
         % baffle 
-        NPI_truck=NPI*X_truck/XMAX;
-        NPI_dis=NPI*X_distance/XMAX;
-        NPI_height=NPI*Y_truck/YMAX;
+       
         
         for kk=15:(15+NPI_truck) 
         if (i == ceil(kk) && J < ceil(NPI_height))
@@ -77,14 +77,15 @@ for I = Istart:Iend
                
         end
         end
-%         
-%         for kk=(15+2*NPI_truck+2*NPI_dis):(15+3*NPI_truck+2*NPI_dis)
-%         if (i == ceil(kk) && J < ceil(NPI_height))
-%                 SP(i,J) = -1e30;
-%         end
-%         end
         
-
+        for kk=(15+2*NPI_truck+2*NPI_dis):(15+3*NPI_truck+2*NPI_dis)
+        if (i == ceil(kk) && J < ceil(NPI_height))
+                SP(i,J) = -1e30;
+        end
+        end
+        
+        
+        
         % The coefficients (hybrid differencing scheme)
         aW(i,J) = max([ Fw, Dw + Fw/2, 0.]);
         aE(i,J) = max([-Fe, De - Fe/2, 0.]);
@@ -99,7 +100,6 @@ for I = Istart:Iend
         else
             aN(i,J) = max([-Fn, Dn - Fn/2, 0.]);
         end
-        
         aPold   = 0.5*(rho(I-1,J) + rho(I,J))*AREAe*AREAn/Dt;
         
         % eq. 8.31 without time dependent terms (see also eq. 5.14):
@@ -119,7 +119,6 @@ for I = Istart:Iend
         % term on the right side into the source term b(i)(J)       
         aP(i,J) = aP(i,J)/relax_u;
         b(i,J)  = b(i,J) + (1.0 - relax_u)*aP(i,J)*u(i,J);
-       
         
         % now we have implemented eq. 6.36 in the form of eq. 7.7
         % and the TDMA algorithm can be called to solve it. This is done

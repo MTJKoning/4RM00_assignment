@@ -15,17 +15,19 @@ clc
 %% declare all variables and contants
 % variables
 global x x_u y y_v u v pc T rho mu Gamma b SMAX SAVG aP aE aW aN aS eps k...
-    u_old v_old pc_old T_old Dt eps_old k_old uplus yplus yplus1 yplus2 P_ATM F_u F_v ratio_u ratio_v m_
+    u_old v_old pc_old T_old Dt eps_old k_old uplus yplus yplus1 yplus2
 % constants
-global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps C1eps C2eps kappa ERough Ti p Y_truck X_truck X_distance
-Y_truck    = 2.70/2;       % 2.70height of a truck [m]
-X_truck    = 15/2;         % 15 length of a truck [m] 
+global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps C1eps C2eps ...
+    kappa ERough Ti p Y_truck X_truck X_distance NPI_truck NPI_dis NPI_height P_ATM
+
+Y_truck    = 2.70;       % 2.70height of a truck [m]
+X_truck    = 15;         % 15 length of a truck [m] 
 X_distance = 5;          % 2 distance between trucks [m]
 NPI        = 100;        % number of grid cells in x-direction [-]
-NPJ        = 50;        % number of grid cells in y-direction [-]
-XMAX       = 3* X_truck + 2* X_distance + 5;        % width of the domain [m]
+NPJ        = 100;        % number of grid cells in y-direction [-]
+XMAX       = 3* X_truck + 2* X_distance + 10;        % width of the domain [m]
 YMAX       = 20;        % height of the domain [m]
-MAX_ITER   = 1000;      % maximum number of outer iterations [-]
+MAX_ITER   = 1000;       % maximum number of outer iterations [-]
 U_ITER     = 1;         % number of Newton iterations for u equation [-]
 V_ITER     = 1;         % number of Newton iterations for v equation [-]
 PC_ITER    = 30;        % number of Newton iterations for pc equation [-]
@@ -38,7 +40,9 @@ LARGE      = 1E30;      % arbitrary very large value [-]
 SMALL      = 1E-30;     % arbitrary very small value [-]
 P_ATM      = 101000.;   % athmospheric pressure [Pa]
 U_IN       = 80/3.6;       % in flow velocity [m/s]
-
+NPI_truck=NPI*X_truck/XMAX;
+NPI_dis=NPI*X_distance/XMAX;
+NPI_height=NPJ*Y_truck/YMAX;
 Cmu        = 0.09;
 sigmak     = 1.;
 sigmaeps   = 1.3;
@@ -199,9 +203,8 @@ end % end of calculation
 
 %% plot vector map
 [X,Y]=meshgrid(y_v, x_u);
-figure(1)
 quiver(Y,X,u,v,3);
-axis equal;
+%axis equal;
 
 figure(2)
 surf(X,Y,u);
@@ -220,4 +223,25 @@ plot(Y(2:NPI,6),u(2:NPI,6));
 hold on
 plot(Y(2:NPI,NPJ-1),u(2:NPI,NPJ-1));
 
+
+p_truck1front=p(15,6);
+p_truck1back=p(ceil(15+NPI_truck),6);
+p_truck2front=p(ceil(15+NPI_truck + NPI_dis),6);
+p_truck2back=p(ceil(15+2*NPI_truck + NPI_dis),6);
+p_truck3front=p(ceil(15+2*NPI_truck + 2*NPI_dis),6);
+p_truck3back=p(ceil(15+3*NPI_truck + 2*NPI_dis),6);
+
+u_truck1front=u(15,6);
+u_truck2front=u(ceil(15+NPI_truck + NPI_dis),6);
+u_truck3front=u(ceil(15+2*NPI_truck + 2*NPI_dis),6);
+
+rho=1.29
+
+Cp1=(p_truck1front-P_ATM)/(0.5* rho * U_IN)
+Cp2=(p_truck2front-P_ATM)/(0.5* rho * U_IN)
+Cp3=(p_truck3front-P_ATM)/(0.5* rho * U_IN)
+
+F1=0.5*rho*u_truck1front*Cp1
+F2=0.5*rho*u_truck2front*Cp2
+F3=0.5*rho*u_truck3front*Cp3
 
