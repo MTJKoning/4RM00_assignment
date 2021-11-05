@@ -15,7 +15,7 @@ clc
 %% declare all variables and contants
 % Variables
 global x x_u y y_v u v pc T rho mu Gamma b SMAX SAVG aP aE aW aN aS eps k...
-    u_old v_old pc_old T_old Dt eps_old k_old uplus yplus yplus1 yplus2 P_ATM Omega Omega_old Su 
+    u_old v_old pc_old T_old Dt eps_old k_old uplus yplus yplus1 yplus2 P_ATM Omega Omega_old Su m_out ratio_v ratio_u m_out_u m_out_v
 % Constants
 global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps sigmaw C1eps C2eps kappa ERough Ti p gamma1 beta1 beta_star
 
@@ -50,9 +50,9 @@ Ti         = 0.04;
 gamma1     = 0.553;
 beta1      = 0.075;
 beta_star  = 0.09;
- 
 
-Dt         = 0.1 ; %XMAX/(NPI*U_IN);
+
+Dt         = 0.1; %XMAX/(NPI*U_IN);
 TOTAL_TIME = 1.;
 
 %% start main function here
@@ -95,16 +95,15 @@ for time = Dt:Dt:TOTAL_TIME
 %             eps = solve(eps, b, aE, aW, aN, aS, aP);
 %         end
         
-        omegacoeff();
-        for iter_Omega = 1:OMEGA_ITER
-            Omega = solve(Omega, b, aE, aW, aN, aS, aP);
-        end
-
         Tcoeff();
         for iter_T = 1:T_ITER
             T = solve(T, b, aE, aW, aN, aS, aP);
         end
         
+        omegacoeff();
+        for iter_Omega = 1:OMEGA_ITER
+            Omega = solve(Omega, b, aE, aW, aN, aS, aP);
+        end
         
         viscosity();
         bound();

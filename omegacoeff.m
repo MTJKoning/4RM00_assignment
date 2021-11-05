@@ -52,6 +52,24 @@ for I = Istart:Iend
             Su(I,J) = gamma1.*(2.*rho(I,J)*E2(I,J))-2/3.*rho(I,J).*Omega(I,J).*dudx(I,J).*eq(I,J);
         end
         
+        % Omega can be fixed to zero by setting SP to a very large value at
+        % the baffle
+%         for kk=0:10
+%         if (i == ceil((NPI+1)/5 + kk) && J < ceil((NPJ+1)/3))
+%             SP(I,J) = -LARGE;
+%             Su(I,J) = 6.*(mu(I,J)./rho(I,J))/(beta1.*yplus(I,J)^2)*LARGE;
+%         end
+%         end
+
+        
+%         % Transport of omega through the baffles can be switched off by setting the coefficients to zero
+%         if (I == ceil((NPI+1)/5) && j < ceil((NPJ+1)/3))     % left of baffle #1
+%             aE(I,j) = 0;  
+%         end
+%         if (I == ceil((NPI+1)/5 + 25)   && j < ceil((NPJ+1)/3))     % right of baffle #1
+%             aW(I,j) = 0;
+%         end
+        
         Su(I,J) =  Su(I,J)*AREAw*AREAs;
         SP(I,J) =  SP(I,J)*AREAw*AREAs;
         
