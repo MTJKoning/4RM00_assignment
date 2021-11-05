@@ -60,16 +60,17 @@ for I = Istart:Iend
 %             SP(I,J) = -rho(I,J)*eps(I,J)/k(I,J);
 %             Su(I,J) = 2.0*mut(I,J)*E2(I,J);
 %         end
-        
+
         % The source terms k - omega
         if J==2 || J ==NPJ+1 && I<15 || J==2 && I>(15+NPI_truck)|| J==2 && I<(15+NPI_truck + NPI_dis) ||...
                 J==2 && I>(15+2*NPI_truck + NPI_dis)
-            SP(I,J) = -LARGE;
-            Su(I,J) = 6.*(mu(I,J)./rho(I,J))/(beta1.*yplus(I,J)^2)*LARGE;
+            SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
+            Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
         else
-            SP(I,J) = -beta1.*rho(I,J).*(eps(I,J))^2;
-            Su(I,J) = gamma1.*(2.*rho(I,J)*E2(I,J))-2/3.*rho(I,J).*eps(I,J).*dudx(I,J).*eq(I,J);
+            SP(I,J) = -beta_star.*rho(I,J).*k(I,J).*eps(I,J);
+            Su(I,J) = 2.0.*mut(I,J)*E2(I,J)-2/3.*rho(I,J).*k(I,J).*dudx(I,J).*eq(I,J); 
         end
+  
         
         Su(I,J) =  Su(I,J)*AREAw*AREAs;
         SP(I,J) =  SP(I,J)*AREAw*AREAs;
