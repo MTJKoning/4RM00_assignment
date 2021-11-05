@@ -2,7 +2,7 @@ function [] = epscoeff()
 % Purpose: To calculate the coefficients for the epsilon.
 
 % constants
-global NPI NPJ Dt Cmu LARGE SMALL sigmaeps kappa C1eps C2eps XMAX X_truck X_distance YMAX Y_truck
+global NPI NPJ Dt Cmu LARGE SMALL sigmaeps kappa C1eps C2eps XMAX X_truck X_distance YMAX Y_truck beta1 gamma1 sigmaw beta_star
 % variables
 global x x_u y y_v SP Su F_u F_v mut rho Istart Iend ...
     Jstart Jend b aE aW aN aS aP k eps E2 eps_old

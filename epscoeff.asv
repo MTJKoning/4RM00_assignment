@@ -2,7 +2,7 @@ function [] = epscoeff()
 % Purpose: To calculate the coefficients for the epsilon.
 
 % constants
-global NPI NPJ Dt Cmu LARGE SMALL sigmaeps kappa C1eps C2eps XMAX X_truck X_distance YMAX Y_truck
+global NPI NPJ Dt Cmu LARGE SMALL sigmaeps kappa C1eps C2eps XMAX X_truck X_distance YMAX Y_truck beta1 gamma1 sigmaw beta_star
 % variables
 global x x_u y y_v SP Su F_u F_v mut rho Istart Iend ...
     Jstart Jend b aE aW aN aS aP k eps E2 eps_old
@@ -44,13 +44,25 @@ for I = Istart:Iend
         Dn = mut(I,J)*mut(I,J+1)/sigmaeps/(mut(I,J)*(y(J+1) - y_v(j+1)) + ...
             mut(I,J+1)*(y_v(j+1)-y(J)))*AREAn;
         
-        % The source terms
-        if J==2 || J == NPJ+1
+%         % The source terms k - e model
+%         if J==NPJ+1 || J==2 && I<15 || J==2 && I>(15+NPI_truck) || J==2 && I<(15+NPI_truck + NPI_dis) ||...
+%                 J==2 && I>(15+2*NPI_truck + NPI_dis)% ||  J==2 && I<(15+2*NPI_truck + 2*NPI_dis) ||...
+%                % J==2 && I>(15+3*NPI_truck + 2*NPI_dis)
+%             SP(I,J) = -LARGE;
+%             Su(I,J) = Cmu^0.75*k(I,J)^1.5/(kappa*0.5*AREAw)*LARGE;
+%         else
+%             SP(I,J) = -C2eps*rho(I,J)*eps(I,J)/(k(I,J) + SMALL);
+%             Su(I,J) = C1eps*eps(I,J)/k(I,J)*2.*mut(I,J)*E2(I,J);
+%         end
+        
+        % The source terms k - omega model
+        if J==2 || J ==NPJ+1 && I<15 || J==2 && I>(15+NPI_truck) || J==2 && I<(15+NPI_truck + NPI_dis) ||...
+                J==2 && I>(15+2*NPI_truck + NPI_dis)
             SP(I,J) = -LARGE;
-            Su(I,J) = Cmu^0.75*k(I,J)^1.5/(kappa*0.5*AREAw)*LARGE;
+            Su(I,J) = 6.*(mu(I,J)./rho(I,J))/(beta1.*yplus(I,J)^2)*LARGE;
         else
-            SP(I,J) = -C2eps*rho(I,J)*eps(I,J)/(k(I,J) + SMALL);
-            Su(I,J) = C1eps*eps(I,J)/k(I,J)*2.*mut(I,J)*E2(I,J);
+            SP(I,J) = -beta1.*rho(I,J).*(Omega(I,J))^2;
+            Su(I,J) = gamma1.*(2.*rho(I,J)*E2(I,J))-2/3.*rho(I,J).*Omega(I,J).*dudx(I,J).*eq(I,J);
         end
         
         Su(I,J) =  Su(I,J)*AREAw*AREAs;
@@ -62,36 +74,26 @@ for I = Istart:Iend
         NPI_dis=NPI*X_distance/XMAX;
         NPI_height=NPI*Y_truck/YMAX;
         
-        
-        if (i == ceil(15) && J < ceil(NPI_height))
+        for kk=15:(15+NPI_truck) 
+        if (i == ceil(kk) && J < ceil(NPI_height))
            SP(I,J) = -LARGE;
            Su(I,J) = Cmu^0.75*k(I,J)^1.5/(kappa*0.5*AREAw)*LARGE;
         end
         end
         
-        if (i == ceil(15+NPI_truck) && J < ceil(NPI_height))
+        for kk=(15+NPI_truck+NPI_dis):(15+2*NPI_truck+NPI_dis)
+        if (i == ceil(kk) && J < ceil(NPI_height))
            SP(I,J) = -LARGE;
            Su(I,J) = Cmu^0.75*k(I,J)^1.5/(kappa*0.5*AREAw)*LARGE;
         end
         end
-%     
-%     
-%         for kk=35:60
-%         if (i == ceil((NPI+1)/5 + kk) && J < ceil((NPJ+1)/3))
-%             SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
-%             Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
-%               
-%         end
-%         end
 %         
-%          for kk=70:85
-%         if (i == ceil((NPI+1)/5 + kk) && J < ceil((NPJ+1)/3))
-%             SP(I,J) = -rho(I,J)*Cmu^0.75*k(I,J)^0.5*uplus(I,J)/(0.5*AREAw)*AREAs*AREAw;
-%             Su(I,J) = tw(I,J)*0.5*(u(i,J) + u(i+1,J))/(0.5*AREAw)*AREAs*AREAw;
+%         for kk=(15+2*NPI_truck+2*NPI_dis):(15+3*NPI_truck+2*NPI_dis)
+%         if (i == ceil(kk) && J < ceil(NPI_height))
+%            SP(I,J) = -LARGE;
+%            Su(I,J) = Cmu^0.75*k(I,J)^1.5/(kappa*0.5*AREAw)*LARGE;
 %         end
 %         end
-%         
-
 
         % The coefficients (hybrid differencing scheme)
         aW(I,J) = max([ Fw, Dw + Fw/2, 0.]);

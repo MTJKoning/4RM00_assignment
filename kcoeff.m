@@ -5,8 +5,7 @@ function [] = kcoeff()
 global NPI NPJ Dt Cmu sigmak
 % variables
 global x x_u y y_v SP Su F_u F_v mut rho u uplus tw Istart Iend ...
-    Jstart Jend b aE aW aN aS aP k k_old eps E2 XMAX X_truck X_distance YMAX Y_truck LARGE 
-
+    Jstart Jend b aE aW aN aS aP k k_old eps E2 XMAX X_truck X_distance YMAX Y_truck LARGE beta1 gamma1 sigmaw beta_star
 
 NPI_truck=NPI*X_truck/XMAX;
 NPI_dis=NPI*X_distance/XMAX;

@@ -15,7 +15,7 @@ clc
 %% declare all variables and contants
 % variables
 global x x_u y y_v u v pc T rho mu Gamma b SMAX SAVG aP aE aW aN aS eps k...
-    u_old v_old pc_old T_old Dt eps_old k_old uplus yplus yplus1 yplus2 P_ATM F_u F_v ratio_u ratio_v m_
+    u_old v_old pc_old T_old Dt eps_old k_old uplus yplus yplus1 yplus2 P_ATM F_u F_v ratio_u ratio_v beta1 gamma1 sigmaw beta_star
 % constants
 global NPI NPJ XMAX YMAX LARGE U_IN SMALL Cmu sigmak sigmaeps C1eps C2eps kappa ERough Ti p Y_truck X_truck X_distance
 Y_truck    = 2.70/2;       % 2.70height of a truck [m]
@@ -40,13 +40,17 @@ P_ATM      = 101000.;   % athmospheric pressure [Pa]
 U_IN       = 80/3.6;       % in flow velocity [m/s]
 
 Cmu        = 0.09;
-sigmak     = 1.;
+sigmak     = 2.0;
 sigmaeps   = 1.3;
+sigmaw     = 2.0;
 C1eps      = 1.44;
 C2eps      = 1.92;
 kappa      = 0.4187;
 ERough     = 9.793;
 Ti         = 0.04;
+gamma1     = 0.553;
+beta1      = 0.075;
+beta_star  = 0.09;
 
 Dt         = XMAX/NPI/U_IN;
 TOTAL_TIME = 1.;
