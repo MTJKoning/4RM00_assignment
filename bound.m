@@ -14,7 +14,7 @@ end
 
 % Set k and eps at the inlet
 k(1,1:NPJ+2)     = 1.5*(U_IN*Ti)^2; % at inlet
-eps(1,1:NPJ+2)   = Cmu^0.75 *k(1,1:NPJ+2).^1.5/(0.07*YMAX*0.5); % at inlet
+eps(1,1:NPJ+2)   = SMALL; %Cmu^0.75 *k(1,1:NPJ+2).^1.5/(0.07*YMAX*0.5); % at inlet
 
 % Fix temperature at the walls in Kelvin
 T(1:NPI+2,1) = 283.; % bottom wall

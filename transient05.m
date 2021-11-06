@@ -52,8 +52,8 @@ gamma1     = 0.553;
 beta1      = 0.075;
 beta_star  = 0.09;
 
-Dt         = 0.01; %XMAX/NPI/U_IN;
-TOTAL_TIME = 1.;
+Dt         = XMAX/NPI/U_IN;
+TOTAL_TIME = Dt*10;
 
 %% start main function here
 init(); % initialization
